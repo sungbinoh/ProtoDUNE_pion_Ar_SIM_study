@@ -23,14 +23,14 @@ source /cvmfs/cms.cern.ch/$SCRAM_ARCH/cms/$cmsswrel/external/$SCRAM_ARCH/bin/thi
 if [[ $HOSTNAME == *"tamsa1"* ]]; then
 
   echo "@@@@ Working on tamsa1"
-  export SKFlatRunlogDir="/data6/Users/$USER/SKFlatRunlog/"
-  export SKFlatOutputDir="/data6/Users/$USER/SKFlatOutput/"
+  export PDStudyRunlogDir="/data6/Users/$USER/PDStudyRunlog/"
+  export PDStudyOutputDir="/data6/Users/$USER/PDStudyOutput/"
 
 elif [[ $HOSTNAME == *"tamsa2"* ]]; then
 
   echo "@@@@ Working on tamsa2"
-  export SKFlatRunlogDir="/data6/Users/$USER/SKFlatRunlog/"
-  export SKFlatOutputDir="/data6/Users/$USER/SKFlatOutput/"
+  export PDStudyRunlogDir="/data6/Users/$USER/PDStudyRunlog/"
+  export PDStudyOutputDir="/data6/Users/$USER/PDStudyOutput/"
 
 fi
 
