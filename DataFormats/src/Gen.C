@@ -28,6 +28,6 @@ void Gen::SetPIDPosition(int pid, double x, double y, double z){
 
 void Gen::Print(){
 
-  cout << "(PID, mass, px, py, pz, E, x, y, z) = " << PID() << "\t" << mass << "\t" << Px() << "\t" << Py() << "\t" << Pz() << "\t" << E() << "\t" << X() << "\t" << Y() << "\t" << Z() << endl;
+  cout << "(PID, mass, px, py, pz, E, x, y, z) = " << PID() << "\t" << mass() << "\t" << Px() << "\t" << Py() << "\t" << Pz() << "\t" << E() << "\t" << X() << "\t" << Y() << "\t" << Z() << endl;
 
 }

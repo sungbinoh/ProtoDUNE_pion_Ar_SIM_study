@@ -5,12 +5,16 @@
 #include "TString.h"
 #include "TMath.h"
 #include "TH3.h"
+#include "TH2D.h"
 #include <sstream>
 #include "TRandom.h"
 
 #include "GEANT4Ntuple.h"
 #include "Event.h"
 #include "Particle.h"
+#include "Gen.h"
+
+#include "SmearParticles.h"
 
 #define M_Z 91.1876
 #define M_W 80.379
@@ -22,7 +26,7 @@
 #define M_e 0.510998/1e3
 #define M_pizero 134.976/1e3
 
-class AnalyzerCore: public SKFlatNtuple {
+class AnalyzerCore: public GEANT4Ntuple {
 
 public:
 
@@ -43,11 +47,12 @@ public:
 
   Event GetEvent();
   
-  std::vector<Particle> GetAllParticles();
+  std::vector<Gen> GetAllParticles();
   
   //==================
   // Tools
   //==================
+  SmearParticles *smear;
   void initializeAnalyzerTools();
 
   //==================

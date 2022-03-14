@@ -7,5 +7,6 @@
 
 #pragma link C++ class Particle+;
 #pragma link C++ class Gen+;
+#pragma link C++ class Event+;
 
 #endif

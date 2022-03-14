@@ -7,6 +7,11 @@ export PDStudyV="Run1_v1"
 mkdir -p $PDStudy_WD/data/$PDStudyV
 export DATA_DIR=$PDStudy_WD/data/$PDStudyV
 
+#### USER INFO ####
+export SKFlatLogEmail='sungbin.oh@cern.ch'
+export SKFlatLogWeb=''
+export SKFlatLogWebDir=''
+
 #### use cvmfs for root ####
 export CMS_PATH=/cvmfs/cms.cern.ch
 source $CMS_PATH/cmsset_default.sh

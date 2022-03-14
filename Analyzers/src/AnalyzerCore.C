@@ -1,9 +1,8 @@
 #include "AnalyzerCore.h"
 
 AnalyzerCore::AnalyzerCore(){
-
   outfile = NULL;
-  //smear = new Smear();
+  smear = new SmearParticles();
 }
 
 AnalyzerCore::~AnalyzerCore(){
@@ -31,7 +30,7 @@ AnalyzerCore::~AnalyzerCore(){
   delete outfile;
 
   //==== Tools
-  //delete smear;
+  delete smear;
 
 }
 

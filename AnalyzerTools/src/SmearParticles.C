@@ -1,6 +1,8 @@
-#include SmearParticles.h
+#include "SmearParticles.h"
 
-Gen SmearParticles::SmearOutParticle(const Gen this_Gen, int smearBit){
+TRandom3 gRan(1800);
+
+Gen SmearParticles::SmearOutParticle(const Gen& this_Gen, int smearBit){
   // == smearBit (smearing on)
   //  0 : non
   //  1 : momentum only
@@ -15,7 +17,7 @@ Gen SmearParticles::SmearOutParticle(const Gen this_Gen, int smearBit){
   Gen out = this_Gen;
  
   double momRes=0;
-
+  int tmppdg = this_Gen.PID();
   // == momRes in fraction 0.0xx
   if(tmppdg==211){//pi+ 
     momRes = 0.02;
