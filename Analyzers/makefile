@@ -7,5 +7,5 @@ ADDITIONAL_ROOTMAPLIBRARY = -rml libAnalyzerTools.so -rml libDataFormats.so -rml
 
 include $(PDStudy_WD)/makefile.common
 
-#INCLUDES += -I$(PDStudy_WD)/DataFormats/include/
+INCLUDES += -I$(PDStudy_WD)/DataFormats/include/
 #INCLUDES += -I$(PDStudy_WD)/AnalyzerTools/include/
