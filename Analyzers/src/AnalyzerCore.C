@@ -71,10 +71,10 @@ Event AnalyzerCore::GetEvent(){
 
 }
 
-std::vector<Particle> AnalyzerCore::GetAllParticles(){
+std::vector<Gen> AnalyzerCore::GetAllParticles(){
   
-  std::vector<Particle> out;
-  // -- Save particle vector with using porper class for each Simulator (GEANT4, FLUKA ...)
+  std::vector<Gen> out;
+  // -- Save particle vector with using proper class for each Simulator (GEANT4, FLUKA ...)
   return out;
   
 }
