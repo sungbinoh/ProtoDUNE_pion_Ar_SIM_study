@@ -2,6 +2,14 @@
 
 TRandom3 gRan(1800);
 
+SmearParticles::SmearParticles(){
+
+}
+
+void SmearParticles::TestClass(){
+  cout << "[[SmearParticles::TestClass]] Test " << endl;
+}
+
 Gen SmearParticles::SmearOutParticle(const Gen& this_Gen, int smearBit){
   // == smearBit (smearing on)
   //  0 : non
@@ -70,4 +78,8 @@ Gen SmearParticles::SmearInputBeam(const Gen& input){
   Gen out = input;
   
   return out;
+}
+
+SmearParticles::~SmearParticles(){
+
 }

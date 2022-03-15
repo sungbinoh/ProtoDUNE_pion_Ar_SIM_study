@@ -1,6 +1,9 @@
 #include "PionAnalyzer.h"
+#include "GEANT4Ntuple.h"
 
 void PionAnalyzer::initializeAnalyzer(){
+  
+  cout << "[[PionAnalyzer::initializeAnalyzer]] Simulator : " << Simulator << endl;
 
 }
 

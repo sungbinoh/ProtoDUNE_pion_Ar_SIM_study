@@ -16,7 +16,8 @@ public:
 
   SmearParticles();
   ~SmearParticles();
-  
+
+  void TestClass();
   Gen SmearOutParticle(const Gen& this_Gen, int smearBit);
   std::vector<Gen> SmearOutParticles(const std::vector<Gen>& Gens, int smearBit);
   Gen SmearInputBeam(const Gen& input);
