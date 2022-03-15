@@ -26,12 +26,18 @@
 #define M_e 0.510998/1e3
 #define M_pizero 134.976/1e3
 
-class AnalyzerCore: public GEANT4Ntuple {
+class AnalyzerCore {
 
 public:
 
   AnalyzerCore();
   ~AnalyzerCore();
+
+  Long64_t MaxEvent, NSkipEvent;
+  int LogEvery;
+  TString MCSample;
+  TString Simulator;
+  vector<TString> Userflags;
 
   virtual void initializeAnalyzer(){
 

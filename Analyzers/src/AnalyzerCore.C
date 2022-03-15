@@ -1,6 +1,12 @@
 #include "AnalyzerCore.h"
 
 AnalyzerCore::AnalyzerCore(){
+  MaxEvent = -1;
+  NSkipEvent = 0;
+  LogEvery = 1000;
+  MCSample = "";
+  Simulator = "";
+  Userflags.clear();
   outfile = NULL;
   smear = new SmearParticles();
 }

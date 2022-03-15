@@ -7,5 +7,6 @@
 
 #pragma link C++ class GEANT4Ntuple+;
 #pragma link C++ class AnalyzerCore+;
+#pragma link C++ class PionAnalyzer+;
 
 #endif

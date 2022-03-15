@@ -3,7 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
-
+/*
 void GEANT4Ntuple::Loop(){
   
   Long64_t nentries = fChain->GetEntriesFast();
@@ -46,15 +46,10 @@ void GEANT4Ntuple::Loop(){
   cout << "[GEANT4Ntuple::Loop] LOOP END " << printcurrunttime() << endl;
 
 }
+*/
 
 //==== Basic
 GEANT4Ntuple::GEANT4Ntuple(){
-  MaxEvent = -1;
-  NSkipEvent = 0;
-  LogEvery = 1000;
-  MCSample = "";
-  Simulator = "";
-  Userflags.clear();
 }
 
 GEANT4Ntuple::~GEANT4Ntuple()
@@ -71,8 +66,10 @@ Int_t GEANT4Ntuple::GetEntry(Long64_t entry)
   return fChain->GetEntry(entry);
 }
 
-void GEANT4Ntuple::Init()
+void GEANT4Ntuple::Init(TChain *ch)
 {
+
+  ch->SetMakeClass(0);
   // Set object pointer                                                                                                                                                                                            
   PDGcode = 0;
   interType = 0;
@@ -85,12 +82,8 @@ void GEANT4Ntuple::Init()
   Py = 0;
   Pz = 0;
   E = 0;
-  // Set branch addresses and branch pointers                                                                                                                                                                      
-  if (!tree) return;
-  fChain = tree;
-  fCurrent = -1;
-  fChain->SetMakeClass(1);
 
+  // Set branch addresses and branch pointers                                                                                                                                                                      
   fChain->SetBranchAddress("EventID", &EventID, &b_EventID);
   fChain->SetBranchAddress("PDGcode", &PDGcode, &b_PDGcode);
   fChain->SetBranchAddress("interType", &interType, &b_interType);

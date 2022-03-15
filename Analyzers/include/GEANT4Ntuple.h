@@ -32,18 +32,8 @@ public :
      fChain->Add(filename);
    }
   
-   Long64_t MaxEvent, NSkipEvent;
-   int LogEvery;
-   TString MCSample;
-   TString Simulator;
-   vector<TString> Userflags;
-
-   virtual void Init();
-   virtual void Loop();
-
-   virtual void executeEvent(){
-
-   };
+   virtual void Init(TChain *ch);
+   //virtual void Loop();
 
    std::string AddZeroToTime(int twodigit){
      if(twodigit<10){
