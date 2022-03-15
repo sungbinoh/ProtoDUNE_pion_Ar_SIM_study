@@ -54,19 +54,14 @@ GEANT4Ntuple::GEANT4Ntuple(){
 
 GEANT4Ntuple::~GEANT4Ntuple()
 {
+  /*
   if (!fChain) return;
   delete fChain->GetCurrentFile();
   cout << "[GEANT4Ntuple::~GEANT4Ntuple] JOB FINISHED " << printcurrunttime() << endl;
+  */
 }
 
-Int_t GEANT4Ntuple::GetEntry(Long64_t entry)
-{
-  // Read contents of entry  
-  if (!fChain) return 0;
-  return fChain->GetEntry(entry);
-}
-
-void GEANT4Ntuple::Init(TChain *ch)
+void GEANT4Ntuple::Init_GEANT4(TChain *ch)
 {
 
   ch->SetMakeClass(0);
@@ -84,17 +79,17 @@ void GEANT4Ntuple::Init(TChain *ch)
   E = 0;
 
   // Set branch addresses and branch pointers                                                                                                                                                                      
-  fChain->SetBranchAddress("EventID", &EventID, &b_EventID);
-  fChain->SetBranchAddress("PDGcode", &PDGcode, &b_PDGcode);
-  fChain->SetBranchAddress("interType", &interType, &b_interType);
-  fChain->SetBranchAddress("targetZ", &targetZ, &b_targetZ);
-  fChain->SetBranchAddress("massPart", &massPart, &b_massPart);
-  fChain->SetBranchAddress("X", &X, &b_X);
-  fChain->SetBranchAddress("Y", &Y, &b_Y);
-  fChain->SetBranchAddress("Z", &Z, &b_Z);
-  fChain->SetBranchAddress("Px", &Px, &b_Px);
-  fChain->SetBranchAddress("Py", &Py, &b_Py);
-  fChain->SetBranchAddress("Pz", &Pz, &b_Pz);
-  fChain->SetBranchAddress("E", &E, &b_E);
+  ch->SetBranchAddress("EventID", &EventID, &b_EventID);
+  ch->SetBranchAddress("PDGcode", &PDGcode, &b_PDGcode);
+  ch->SetBranchAddress("interType", &interType, &b_interType);
+  ch->SetBranchAddress("targetZ", &targetZ, &b_targetZ);
+  ch->SetBranchAddress("massPart", &massPart, &b_massPart);
+  ch->SetBranchAddress("X", &X, &b_X);
+  ch->SetBranchAddress("Y", &Y, &b_Y);
+  ch->SetBranchAddress("Z", &Z, &b_Z);
+  ch->SetBranchAddress("Px", &Px, &b_Px);
+  ch->SetBranchAddress("Py", &Py, &b_Py);
+  ch->SetBranchAddress("Pz", &Pz, &b_Pz);
+  ch->SetBranchAddress("E", &E, &b_E);
 
 }

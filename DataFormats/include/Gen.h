@@ -14,6 +14,7 @@ public:
   inline bool IsEmpty() const { return j_IsEmpty; }
 
   void SetPIDPosition(int pid, double x, double y, double z);
+  void SetInterType(int inter_type);
   inline int PID() const { return j_PID; }
   inline int interType() const { return j_interType; }
   inline double mass() const { return j_massPart; }

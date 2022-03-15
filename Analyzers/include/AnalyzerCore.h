@@ -26,12 +26,14 @@
 #define M_e 0.510998/1e3
 #define M_pizero 134.976/1e3
 
-class AnalyzerCore {
+class AnalyzerCore: public GEANT4Ntuple {
 
 public:
 
   AnalyzerCore();
   ~AnalyzerCore();
+
+  
 
   Long64_t MaxEvent, NSkipEvent;
   int LogEvery;
@@ -48,13 +50,56 @@ public:
   };
 
   //==================
+  // Read Tree
+  //==================
+  virtual void SetTreeName(){
+    TString tname = "";
+    if(Simulator.Contains("GEANT")){
+      tname = "PartInfo";
+    }
+    if(Simulator.Contains("FLUKA")){
+
+    }
+    
+    fChain = new TChain(tname);
+  }
+
+  virtual void AddFile(TString filename){
+    fChain->Add(filename);
+  }
+
+  Int_t GetEntry(Long64_t entry);
+
+  TChain *fChain;
+
+  std::string printcurrunttime(){
+
+    std::stringstream out;
+    TDatime datime;
+    out << datime.GetYear()<<"-"<<AddZeroToTime(datime.GetMonth())<<"-"<<AddZeroToTime(datime.GetDay())<<" "<<AddZeroToTime(datime.GetHour())<<":"<<AddZeroToTime(datime.GetMinute())<<":"<<AddZeroToTime(datime.GetSecond());
+    return out.str();
+
+  }
+
+  std::string AddZeroToTime(int twodigit){
+    if(twodigit<10){
+      return "0"+std::to_string(twodigit);
+    }
+    else{
+      return std::to_string(twodigit);
+    }
+  }
+
+  void Loop();
+
+  //==================
   // Get Particles
   //==================
 
   Event GetEvent();
   
   std::vector<Gen> GetAllParticles();
-  
+  std::vector<Gen> GetAllParticles_GEANT4();
   //==================
   // Tools
   //==================

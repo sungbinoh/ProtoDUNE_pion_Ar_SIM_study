@@ -18,7 +18,9 @@ Gen::~Gen(){
 void Gen::SetIsEmpty(bool b){
   j_IsEmpty = b;
 }
-
+void Gen::SetInterType(int inter_type){
+  j_interType = inter_type;
+}
 void Gen::SetPIDPosition(int pid, double x, double y, double z){
   j_PID = pid;
   j_X = x;

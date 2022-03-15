@@ -9,7 +9,7 @@ public:
 
   void initializeAnalyzer();
   void executeEvent();
-  void Loop();
+  void Init();
 
   PionAnalyzer();
   ~PionAnalyzer();

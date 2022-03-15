@@ -38,7 +38,60 @@ AnalyzerCore::~AnalyzerCore(){
   //==== Tools
   delete smear;
 
+  if (!fChain) return;
+  delete fChain->GetCurrentFile();
+  cout << "[AnalyzerCore::~AnalyzerCore] JOB FINISHED " << printcurrunttime() << endl;
+
 }
+//==================
+//==== Read Trees
+//==================
+Int_t AnalyzerCore::GetEntry(Long64_t entry)
+{
+  // Read contents of entry 
+  if (!fChain) return 0;
+  return fChain->GetEntry(entry);
+}
+
+void AnalyzerCore::Loop(){
+
+  Long64_t nentries = fChain->GetEntries();
+  if(MaxEvent>0){
+    nentries = std::min(nentries,MaxEvent);
+  }
+
+  cout << "[AnalyzerCore::Loop] MaxEvent = " << MaxEvent << endl;
+  cout << "[AnalyzerCore::Loop] NSkipEvent = " << NSkipEvent << endl;
+  cout << "[AnalyzerCore::Loop] LogEvery = " << LogEvery << endl;
+  cout << "[SKFlatNtuple::Loop] MCSample = " << MCSample << endl;
+  cout << "[AnalyzerCore::Loop] Simulator = " << Simulator << endl;
+  cout << "[AnalyzerCore::Loop] Userflags = {" << endl;
+  for(unsigned int i=0; i<Userflags.size(); i++){
+    cout << "[AnalyzerCore::Loop]   \"" << Userflags.at(i) << "\"," << endl;
+  }
+  cout << "[AnalyzerCore::Loop] }" << endl;
+
+  cout << "[AnalyzerCore::Loop] Event Loop Started " << printcurrunttime() << endl;
+
+  for(Long64_t jentry=0; jentry<nentries;jentry++){
+
+    if(jentry<NSkipEvent){
+      continue;
+    }
+
+    if(jentry%LogEvery==0){
+      cout << "[AnalyzerCore::Loop RUNNING] " << jentry << "/" << nentries << " ("<<100.*jentry/nentries<<" %) @ " << printcurrunttime() << endl;
+    }
+
+    fChain->GetEntry(jentry);
+
+    executeEvent();
+  }
+
+  cout << "[AnalyzerCore::Loop] LOOP END " << printcurrunttime() << endl;
+
+}
+
 
 //==== Attach the historams to ai different direcotry, not outfile
 //==== We will write these histograms in WriteHist() to outfile
@@ -84,6 +137,28 @@ std::vector<Gen> AnalyzerCore::GetAllParticles(){
   
 }
 
+std::vector<Gen> AnalyzerCore::GetAllParticles_GEANT4(){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i< PDGcode->size(); i++){
+    Gen current_particle;
+    current_particle.SetPIDPosition(PDGcode->at(i), X->at(i), Y->at(i), Z->at(i));
+    current_particle.SetPxPyPzE(Px->at(i), Py->at(i), Pz->at(i), E->at(i));
+    current_particle.SetInterType(interType->at(i));
+
+    out.push_back(current_particle);
+  }
+
+  return out;
+
+}
+
+//==================
+// Initialize
+//==================
+void AnalyzerCore::initializeAnalyzerTools(){
+
+}
 
 //==================
 //==== Plotting

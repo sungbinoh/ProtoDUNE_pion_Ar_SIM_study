@@ -22,8 +22,8 @@ public :
    GEANT4Ntuple();
    virtual ~GEANT4Ntuple();
 
-   virtual Int_t GetEntry(Long64_t entry);
-  
+   //virtual Int_t GetEntry(Long64_t entry);
+   /*
    virtual void SetTreeName(TString tname){
      fChain = new TChain(tname);
    }
@@ -31,29 +31,11 @@ public :
    virtual void AddFile(TString filename){
      fChain->Add(filename);
    }
-  
-   virtual void Init(TChain *ch);
+   */
+   virtual void Init_GEANT4(TChain *ch);
    //virtual void Loop();
 
-   std::string AddZeroToTime(int twodigit){
-     if(twodigit<10){
-       return "0"+std::to_string(twodigit);
-     }
-     else{
-       return std::to_string(twodigit);
-     }
-   }
-
-   std::string printcurrunttime(){
-
-     std::stringstream out;
-     TDatime datime;
-     out << datime.GetYear()<<"-"<<AddZeroToTime(datime.GetMonth())<<"-"<<AddZeroToTime(datime.GetDay())<<" "<<AddZeroToTime(datime.GetHour())<<":"<<AddZeroToTime(datime.GetMinute())<<":"<<AddZeroToTime(datime.GetSecond());
-     return out.str();
-
-   }
-
-   TChain *fChain;
+   //TChain *fChain;
 
    // Declaration of leaf types
    Int_t           EventID;
