@@ -1,5 +1,3 @@
-#include <iostream>
-
 R__LOAD_LIBRARY(libPhysics.so)
 R__LOAD_LIBRARY(libTree.so)
 R__LOAD_LIBRARY(libHist.so)

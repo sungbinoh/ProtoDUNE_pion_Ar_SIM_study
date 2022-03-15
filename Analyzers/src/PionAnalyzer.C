@@ -18,7 +18,9 @@ void PionAnalyzer::executeEvent(){
   }
   else return;
 
-  cout << "[[PionAnalyzer::executeEvent]] particles_all.size() : " << particles_all.size() << endl;
+  //cout << "[[PionAnalyzer::executeEvent]] particles_all.size() : " << particles_all.size() << endl;
+
+  FillHist("Number_of_particles", particles_all.size(), 1., 40, -0.5, 39.5);
 
 }
 void PionAnalyzer::Init(){

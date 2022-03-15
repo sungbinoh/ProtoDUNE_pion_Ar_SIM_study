@@ -8,9 +8,9 @@ mkdir -p $PDStudy_WD/data/$PDStudyV
 export DATA_DIR=$PDStudy_WD/data/$PDStudyV
 
 #### USER INFO ####
-export SKFlatLogEmail='sungbin.oh@cern.ch'
-export SKFlatLogWeb=''
-export SKFlatLogWebDir=''
+export PDStudyLogEmail='sungbin.oh@cern.ch'
+export PDStudyLogWeb=''
+export PDStudyLogWebDir=''
 
 #### use cvmfs for root ####
 export CMS_PATH=/cvmfs/cms.cern.ch
@@ -30,13 +30,13 @@ if [[ $HOSTNAME == *"tamsa1"* ]]; then
   echo "@@@@ Working on tamsa1"
   export PDStudyRunlogDir="/data6/Users/$USER/PDStudyRunlog/"
   export PDStudyOutputDir="/data6/Users/$USER/PDStudyOutput/"
-
+  
 elif [[ $HOSTNAME == *"tamsa2"* ]]; then
 
   echo "@@@@ Working on tamsa2"
   export PDStudyRunlogDir="/data6/Users/$USER/PDStudyRunlog/"
   export PDStudyOutputDir="/data6/Users/$USER/PDStudyOutput/"
-
+  echo $PDStudyRunlogDir
 fi
 
 alias pdout="cd $PDStudyOutputDir/$PDStudyV/"
