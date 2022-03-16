@@ -97,9 +97,15 @@ public:
   //==================
 
   Event GetEvent();
-  
+
   std::vector<Gen> GetAllParticles();
   std::vector<Gen> GetAllParticles_GEANT4();
+  std::vector<Gen> GetPiplus(const std::vector<Gen>& particles, double min_P);
+  std::vector<Gen> GetProtons(const std::vector<Gen>& particles, double min_P);
+  std::vector<Gen> GetPizeros(const std::vector<Gen>& particles, double min_P);
+  std::vector<Gen> GetBkgParticles(const std::vector<Gen>& particles, double min_P);
+  std::vector<Gen> GetNuclei(const std::vector<Gen>& particles);
+
   //==================
   // Tools
   //==================

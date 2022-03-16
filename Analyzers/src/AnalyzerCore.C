@@ -153,6 +153,58 @@ std::vector<Gen> AnalyzerCore::GetAllParticles_GEANT4(){
 
 }
 
+std::vector<Gen> AnalyzerCore::GetPiplus(const std::vector<Gen>& particles, double min_P){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == 211 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
+
+std::vector<Gen> AnalyzerCore::GetProtons(const std::vector<Gen>& particles, double min_P){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == 2212 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
+
+std::vector<Gen> AnalyzerCore::GetPizeros(const std::vector<Gen>& particles, double min_P){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == 111 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
+
+std::vector<Gen> AnalyzerCore::GetBkgParticles(const std::vector<Gen>& particles, double min_P){
+  // == Collect : pi- (-111), Kaon +- (+- 321), K0 (321), muon (+- 13)
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == -211 || abs(particles.at(i).PID()) == 321 || abs(particles.at(i).PID()) == 13){ 
+      if(particles.at(i).P() > min_P) out.push_back(particles.at(i));
+    }
+  }
+
+  return out;
+}
+
+std::vector<Gen> AnalyzerCore::GetNuclei(const std::vector<Gen>& particles){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() > 1000000000) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
 //==================
 // Initialize
 //==================
