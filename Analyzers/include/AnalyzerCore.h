@@ -33,13 +33,13 @@ public:
   AnalyzerCore();
   ~AnalyzerCore();
 
-  
-
   Long64_t MaxEvent, NSkipEvent;
   int LogEvery;
   TString MCSample;
   TString Simulator;
   vector<TString> Userflags;
+
+  bool debug_mode = false;
 
   virtual void initializeAnalyzer(){
 
@@ -109,6 +109,8 @@ public:
   //==================
   // Functions
   //==================
+  int GetAtomicNumber(int pid);
+  int GetAtomicMass(int pid);
 
 
   //===Plotting

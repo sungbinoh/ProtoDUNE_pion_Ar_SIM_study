@@ -161,6 +161,40 @@ void AnalyzerCore::initializeAnalyzerTools(){
 }
 
 //==================
+// Functions for Particles
+//==================
+int AnalyzerCore::GetAtomicNumber(int pid){
+
+  int out;
+
+  if(pid < 1000000000) return 0;
+  
+  out = (pid - 1000000000) / 10000;
+
+  return out;
+
+}
+
+int AnalyzerCore::GetAtomicMass(int pid){
+
+  int out;
+  
+  if(pid < 1000000000) return 0;
+
+  int current_atomic_number = GetAtomicNumber(pid);
+  
+  //cout << "[[AnalyzerCore::GetAtomicMass]] pid - 1000000000 : " << pid - 1000000000 << endl;
+  //cout << "[[AnalyzerCore::GetAtomicMass]] pid - 1000000000 current_atomic_number * 10000 : "<< pid - 1000000000 - current_atomic_number * 10000<< endl;
+
+  out = (pid - 1000000000 - current_atomic_number * 10000) / 10;
+
+  return out;
+
+}
+
+
+
+//==================
 //==== Plotting
 //==================
 TH1D* AnalyzerCore::GetHist1D(TString histname){
