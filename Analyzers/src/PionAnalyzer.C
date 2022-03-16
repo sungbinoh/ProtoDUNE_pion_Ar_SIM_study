@@ -5,7 +5,7 @@ void PionAnalyzer::initializeAnalyzer(){
   
   cout << "[[PionAnalyzer::initializeAnalyzer]] Simulator : " << Simulator << endl;
   debug_mode = true;
-  //debug_mode = false;
+  debug_mode = false;
 
 }
 
