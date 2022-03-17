@@ -15,7 +15,7 @@ void run_test(){
   PionAnalyzer m;
   //SetTreeName();
   cout << "Setting event variables" << endl;
-  m.MaxEvent = 10000;
+  m.MaxEvent = 50000;
   m.MCSample = "Piplus_1GeV_Ar";
   m.Simulator = "GEANT4";
   m.SetTreeName();
