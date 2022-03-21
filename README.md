@@ -26,3 +26,7 @@ Output sent to : /data6/Users/suoh/PDStudyOutput//Run1_v1/PionAnalyzer/GEANT4/
 Job started at 2022-03-16 11:03:06
 Job finished at 2022-03-16 11:05:47
 ```
+
+## Research log
+
+[Link](https://sungbinoh.github.io/ProtoDUNE_pion_Ar_SIM_study/)
