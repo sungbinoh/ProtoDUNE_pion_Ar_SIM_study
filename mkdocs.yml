@@ -5,6 +5,9 @@ edit_uri: edit/102x/docs
 
 nav:
         - Home: index.md
+        - SR1:
+          - "Residual mass cut": SR1/residual_mass.md
+
 theme:
         name: cinder
         include_sidebar: true
