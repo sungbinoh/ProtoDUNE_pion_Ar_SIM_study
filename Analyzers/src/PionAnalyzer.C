@@ -94,6 +94,11 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
   Particle Ar_target;
   Ar_target.SetPxPyPzE(0., 0., 0., 37225); //40Ar mass = 37.225 GeV, https://www.wolframalpha.com/input?i2d=true&i=Argon+40+mass+in+GeV 
   Particle residual_reco = beam + Ar_target - piplus.at(1) - protons.at(0);
+  double residual_mass = residual_reco.M();
+
+  // -- Apply residual mass cut
+  if(residual_mass > 36310) return;
+
 
   // -- Calculate additional variables
   double Q_square = 0., Q = 0., q0 = 0., y = 0., sqrt_s = 0.;
