@@ -1,8 +1,6 @@
-## Welcome to GitHub Pages
+## Research log of pion-Ar scattering
 
-You can use the [editor on GitHub](https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+You can use the [package](https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/) to analyize GEANT4 and FLUKA simulation output root files.
 
 ### Markdown
 
