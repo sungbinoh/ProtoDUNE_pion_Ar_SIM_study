@@ -25,7 +25,7 @@ It means that there are two different physics.
 We would like to understand it.
 
 
-###  ${Q}^{2}$ vs Momentum balance
+###  Q^2 vs Momentum balance
 
 We can think about momentum balance between outgoing ${\pi}^{+}$ and proton.  
 At the first peak of ${Q}^{2}$ distribution, the outoing ${\pi}^{+}$ has larger momentum compared to the outgoing proton  
