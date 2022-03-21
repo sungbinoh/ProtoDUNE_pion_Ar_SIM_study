@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>Residual mass cut - Piplus_Ar</title>
+    <title>Q square - Piplus_Ar</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -81,14 +81,14 @@
                         <ul class="dropdown-menu">
                         
                             
-<li class="active">
-    <a href="./">Residual mass cut</a>
+<li >
+    <a href="../residual_mass/">Residual mass cut</a>
 </li>
 
                         
                             
-<li >
-    <a href="../Q_square/">Q square</a>
+<li class="active">
+    <a href="./">Q square</a>
 </li>
 
                         
@@ -105,17 +105,17 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../..">
+                        <a rel="prev" href="../residual_mass/">
                             <i class="fas fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li >
-                        <a rel="next" href="../Q_square/">
+                    <li class="disabled">
+                        <a rel="next" >
                             Next <i class="fas fa-arrow-right"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/SR1/residual_mass.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/SR1/Q_square.md"><i class="fab fa-github"></i> Edit on GitHub</a>
                     </li>
             </ul>
         </div>
@@ -127,36 +127,24 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#definition-of-residual-mass">Definition of residual mass</a></li>
-            <li class="second-level"><a href="#residual-mass-distribution-before-smearing">Residual mass distribution before smearing</a></li>
+        <li class="first-level active"><a href="#definition-of-q_square">Definition of Q_square</a></li>
+            <li class="second-level"><a href="#q-squre-distributions">Q squre distributions</a></li>
                 
-            <li class="second-level"><a href="#residual-mass-distribution-after-smearing">Residual mass distribution after smearing</a></li>
-                
-                <li class="third-level"><a href="#how-many-additional-neutrons">How many additional neutrons?</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="definition-of-residual-mass">Definition of residual mass</h1>
-<p>We reconstruct 4-vector of residual nuclei using beam, outgoing <span class="arithmatex"><span class="MathJax_Preview">{\pi}^{+}</span><script type="math/tex">{\pi}^{+}</script></span> and proton.  </p>
-<pre><code>${X}^{'}$ = beam - Ar_target(at rest) - ${\pi}^{+}$ - proton
+<h1 id="definition-of-q_square">Definition of Q_square</h1>
+<p>We check the Lorentz invariant <span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> to study the scattering</p>
+<pre><code>Particle q_4vec = beam - piplus.at(1);
+Q_square = (-pow(q_4vec.E(), 2) + pow(q_4vec.P(), 2))
 </code></pre>
-<h2 id="residual-mass-distribution-before-smearing">Residual mass distribution before smearing</h2>
-<p><img alt="" src="../residual_mass_no_smear.png" /></p>
-<p>We observe Z = 17 background (Cl with different atomic mass) at just above signal events.<br />
-So, we can expect that overlap between signal and background after smearing will be dominated by Z = 17 background.</p>
-<h2 id="residual-mass-distribution-after-smearing">Residual mass distribution after smearing</h2>
-<p><img alt="" src="../residual_mass_with_smear.png" /></p>
-<p>We observe exactly what we expected</p>
-<h3 id="how-many-additional-neutrons">How many additional neutrons?</h3>
-<p>There should be additional neutrons for events in Z = 17 background.<br />
-We want to check,  </p>
-<ul>
-<li>How many neutrons at truth level after scattering?</li>
-<li>Which cut value on residual mass will give good signal purity?</li>
-</ul>
-<p><img alt="" src="../residual_mass_with_smear_n_N_1.png" />
-<img alt="" src="../residual_mass_with_smear_n_N_2.png" /></p></div>
+<h2 id="q-squre-distributions">Q squre distributions</h2>
+<p><span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution of signal and Z = 17 background without smearing.</p>
+<p><img alt="" src="../Q_square_no_smearing.png" /></p>
+<p><span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution of signal and Z = 17 background after smearing.</p>
+<p><img alt="" src="../Q_square_with_smearing.png" /></p>
+<p>We observe a bit wider shape after applying smearing.</p></div>
         
         
     </div>
