@@ -8,7 +8,7 @@ nav:
         - SR1:
           - "Residual mass cut": SR1/residual_mass.md
           - "Q square": SR1/Q_square.md
-
+          - "Plots with mX cut": SR1/Plots_after_residual_mass_cut.md
 theme:
         name: cinder
         include_sidebar: true
