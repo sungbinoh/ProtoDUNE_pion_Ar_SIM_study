@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>Q square - Piplus_Ar</title>
+    <title>Plots with mX cut - Piplus_Ar</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -87,14 +87,14 @@
 
                         
                             
-<li class="active">
-    <a href="./">Q square</a>
+<li >
+    <a href="../Q_square/">Q square</a>
 </li>
 
                         
                             
-<li >
-    <a href="../Plots_after_residual_mass_cut/">Plots with mX cut</a>
+<li class="active">
+    <a href="./">Plots with mX cut</a>
 </li>
 
                         
@@ -111,17 +111,17 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../residual_mass/">
+                        <a rel="prev" href="../Q_square/">
                             <i class="fas fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li >
-                        <a rel="next" href="../Plots_after_residual_mass_cut/">
+                    <li class="disabled">
+                        <a rel="next" >
                             Next <i class="fas fa-arrow-right"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/SR1/Q_square.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/SR1/Plots_after_residual_mass_cut.md"><i class="fab fa-github"></i> Edit on GitHub</a>
                     </li>
             </ul>
         </div>
@@ -133,46 +133,37 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#definition-of-q2">Definition of Q^2</a></li>
-            <li class="second-level"><a href="#q2-distributions">Q^2 distributions</a></li>
+        <li class="first-level active"><a href="#plots-after-applying-residual-mass-to-be-smaller-than-36310-mev-cut">Plots after applying residual mass to be smaller than 36310 MeV cut</a></li>
+            <li class="second-level"><a href="#residual-mass">Residual mass</a></li>
                 
-                <li class="third-level"><a href="#q2-vs-momentum-balance">Q^2 vs Momentum balance</a></li>
+            <li class="second-level"><a href="#momentum">Momentum</a></li>
+                
+            <li class="second-level"><a href="#momentum-balance">Momentum balance</a></li>
+                
+            <li class="second-level"><a href="#q2">Q^2</a></li>
+                
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="definition-of-q2">Definition of Q^2</h1>
-<p>We check the Lorentz invariant <span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> to study the scattering</p>
-<pre><code>Particle q_4vec = beam - piplus.at(1);
-Q_square = (-pow(q_4vec.E(), 2) + pow(q_4vec.P(), 2))
-</code></pre>
-<h2 id="q2-distributions">Q^2 distributions</h2>
-<p><span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution of signal and Z = 17 background without smearing.</p>
-<p><img alt="" src="../Q_square_no_smearing.png" /></p>
-<p><span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution of signal and Z = 17 background after smearing.</p>
-<p><img alt="" src="../Q_square_with_smearing.png" /></p>
-<p>We observe a bit wider shape after applying smearing.<br />
-Signal and Z = 17 background events show a bit different shapes,<br />
-but <span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> is not a good discriminating variable.</p>
-<p>There are two peaks, one at ~0.2 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span> and the other at ~1.1 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span>.<br />
-It means that there are two different physics.<br />
-We would like to understand it.</p>
-<h3 id="q2-vs-momentum-balance">Q^2 vs Momentum balance</h3>
-<p>We can think about momentum balance between outgoing <span class="arithmatex"><span class="MathJax_Preview">{\pi}^{+}</span><script type="math/tex">{\pi}^{+}</script></span> and proton.<br />
-At the first peak of <span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution, the outoing <span class="arithmatex"><span class="MathJax_Preview">{\pi}^{+}</span><script type="math/tex">{\pi}^{+}</script></span> has larger momentum compared to the outgoing proton<br />
-because it is quasi-elastic (QE) scattering with small momentum transfer.<br />
-At the second peak of <span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distribution, the outoing <span class="arithmatex"><span class="MathJax_Preview">{\pi}^{+}</span><script type="math/tex">{\pi}^{+}</script></span> would have comparable momentum with the outgoing proton.<br />
-However, momentum balance would prefer negative value due to different momentum cuts applied to <span class="arithmatex"><span class="MathJax_Preview">{\pi}^{+}</span><script type="math/tex">{\pi}^{+}</script></span> (&gt; 0.1 GeV) and proton (&gt; 0.3 GeV).</p>
-<h4 id="signal">Signal</h4>
-<p><img alt="Q2 vs Momentum balance({\pi}^{+}{\pi}^{+}, p)" src="../Q2_VS_p_bal_piplus_p_signal.png" />
-<img alt="Zoomed" src="../Q2_VS_p_bal_piplus_p_signal_zoom1.png" />
-<img alt="Zoomed more" src="../Q2_VS_p_bal_piplus_p_signal_zoom2.png" /></p>
-<p>We observe what we expected.</p>
-<h4 id="z-17-background">Z = 17 background</h4>
-<p><img alt="Q2 vs Momentum balance({\pi}^{+}{\pi}^{+}, p)" src="../Q2_VS_p_bal_piplus_p_bkg.png" />
-<img alt="Zoomed" src="../Q2_VS_p_bal_piplus_p_bkg_zoom1.png" />
-<img alt="Zoomed more" src="../Q2_VS_p_bal_piplus_p_bkg_zoom2.png" /></p>
-<p>Z = 17 background shows a wider distributions along momentum balance because additional neutrons share momentum.</p></div>
+<h2 id="plots-after-applying-residual-mass-to-be-smaller-than-36310-mev-cut">Plots after applying residual mass to be smaller than 36310 MeV cut</h2>
+<p>All plots are drawn after applying momentum and angular smearing.
+At second pad of each plot, ratio between absolute shape of signal and Z = 17 background is presented.</p>
+<h3 id="residual-mass">Residual mass</h3>
+<p><img alt="Residual mass" src="../M_residual_SR1_All.pdf" /></p>
+<p>We can check that cut on residual mass to be smaller than 36310 MeV is applied correctly.</p>
+<h3 id="momentum">Momentum</h3>
+<p><img alt="Proton momentum" src="../P_proton_SR1_All.pdf" />
+<img alt="Outgoing {\pi}^{+}{\pi}^{+} momentum" src="../P_piplus_SR1_All.pdf" /></p>
+<p>We see that shapes of signal and Z = 17 backgroud events are different at and nearby the peak.</p>
+<h3 id="momentum-balance">Momentum balance</h3>
+<p><img alt="(P({\pi}^{+}{\pi}^{+}) - P(p)) / P({\pi}^{+}{\pi}^{+})" src="../P_balance_piplus_p_SR1_All.pdf" />
+<img alt="(P(beam) - P({\pi}^{+}{\pi}^{+})) / P(beam)" src="../P_balance_beam_piplus_SR1_All.pdf" />
+<img alt="(P(beam) - P(p)) / P(beam)" src="../P_balance_beam_p_SR1_All.pdf" /></p>
+<p>Momentum balance distributions show more similar shapes between signal and Z = 17 background than momentum plots.</p>
+<h3 id="q2">Q^2</h3>
+<p><img alt="Q square" src="../Q_square_SR1_All.pdf" /></p>
+<p>Q^2 distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span>, 1 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span>] range.</p></div>
         
         
     </div>
