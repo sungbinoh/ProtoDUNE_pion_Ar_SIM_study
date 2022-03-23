@@ -18,7 +18,7 @@ We see that shapes of signal and Z = 17 backgroud events are different at and ne
 
 ### Momentum balance
 
-![(P(pi+) - P(p)) / P(pi+](P_balance_piplus_p_SR1_All.png)
+![(P(pi+) - P(p)) / P(pi+)](P_balance_piplus_p_SR1_All.png)
 ![(P(beam) - P(pi+)) / P(beam)](P_balance_beam_piplus_SR1_All.png)
 ![(P(beam) - P(p)) / P(beam)](P_balance_beam_p_SR1_All.png)
 
@@ -28,5 +28,5 @@ Momentum balance distributions show more similar shapes between signal and Z = 1
 
 ![Q square](Q_square_SR1_All.png)
 
-Q^2 distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 ${GeV}^{2}$, 1 ${GeV}^{2}$] range.
+${Q}^{2}$ distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 ${GeV}^{2}$, 1 ${GeV}^{2}$] range.
 It could be used for Z = 17 background estimation.
