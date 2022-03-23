@@ -24,3 +24,7 @@ markdown_extensions:
         - pymdownx.arithmatex
         - pymdownx.details
         - admonition
+
+plugins:
+    - search
+    - img2fig
