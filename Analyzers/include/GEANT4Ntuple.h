@@ -12,8 +12,6 @@
 #include <fstream>
 #include <sstream>
 
-// Fixed size dimensions of array or collections stored in the TTree if any.
-
 using namespace std;
 
 class GEANT4Ntuple {
@@ -22,20 +20,7 @@ public :
    GEANT4Ntuple();
    virtual ~GEANT4Ntuple();
 
-   //virtual Int_t GetEntry(Long64_t entry);
-   /*
-   virtual void SetTreeName(TString tname){
-     fChain = new TChain(tname);
-   }
-
-   virtual void AddFile(TString filename){
-     fChain->Add(filename);
-   }
-   */
    virtual void Init_GEANT4(TChain *ch);
-   //virtual void Loop();
-
-   //TChain *fChain;
 
    // Declaration of leaf types
    Int_t           EventID;

@@ -10,6 +10,7 @@
 #include "TRandom.h"
 
 #include "GEANT4Ntuple.h"
+#include "FLUKANtuple.h"
 #include "Event.h"
 #include "Particle.h"
 #include "Gen.h"
@@ -26,13 +27,16 @@
 #define M_e 0.510998/1e3
 #define M_pizero 134.976/1e3
 
-class AnalyzerCore: public GEANT4Ntuple {
+//class AnalyzerCore: public GEANT4Ntuple, public FLUKANtuple {
+class AnalyzerCore {
 
 public:
 
   AnalyzerCore();
   ~AnalyzerCore();
 
+  GEANT4Ntuple this_GEANT4Ntuple;
+  FLUKANtuple this_FLUKANtuple;
   Long64_t MaxEvent, NSkipEvent;
   int LogEvery;
   TString MCSample;
@@ -58,7 +62,7 @@ public:
       tname = "PartInfo";
     }
     if(Simulator.Contains("FLUKA")){
-
+      tname = "HitsTree";
     }
     
     fChain = new TChain(tname);
@@ -71,6 +75,8 @@ public:
   Int_t GetEntry(Long64_t entry);
 
   TChain *fChain;
+
+  void Init();
 
   std::string printcurrunttime(){
 
@@ -100,6 +106,7 @@ public:
 
   std::vector<Gen> GetAllParticles();
   std::vector<Gen> GetAllParticles_GEANT4();
+  std::vector<Gen> GetAllParticles_FLUKA();
   std::vector<Gen> GetPiplus(const std::vector<Gen>& particles, double min_P);
   std::vector<Gen> GetProtons(const std::vector<Gen>& particles, double min_P);
   std::vector<Gen> GetPizeros(const std::vector<Gen>& particles, double min_P);

@@ -1,5 +1,6 @@
 #include "PionAnalyzer.h"
-#include "GEANT4Ntuple.h"
+//#include "GEANT4Ntuple.h"
+//#include "FLUKANtuple.h"
 
 void PionAnalyzer::initializeAnalyzer(){
   
@@ -11,16 +12,28 @@ void PionAnalyzer::initializeAnalyzer(){
 
 void PionAnalyzer::executeEvent(){
 
+  if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] : START" << endl;
+  // == Returning events for FLUKA samples
+  if(Simulator.Contains("FLUKA")){
+    int N_inela_inter = this_FLUKANtuple.NIneHits;
+    if(N_inela_inter != 1) return;
+  }
+
   // == Collect all particles in an event
   std::vector<Gen> particles_all;
   if(Simulator.Contains("GEANT")){
     particles_all = GetAllParticles_GEANT4();
   }
   else if(Simulator.Contains("FLUKA")){
-
+    particles_all = GetAllParticles_FLUKA();
   }
   else return;
+  
+  if(particles_all.size() < 1) return;
 
+  if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] : called all particles" << endl;
+
+  
   // == Collect particles depending on PDG ID. Cut on momuntum : .P() > 0.
   std::vector<Gen> piplus_all = GetPiplus(particles_all, 0.);
   std::vector<Gen> protons_all = GetProtons(particles_all, 0.);
@@ -30,12 +43,12 @@ void PionAnalyzer::executeEvent(){
   // Momentum smearing only
   //std::vector<Gen> piplus_mom_smear = GetPiplus(smear->SmearOutParticles(piplus_all, 1), 100.);
 
-  //if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] particles_all.size() : " << particles_all.size() << endl;
-
+  if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] particles_all.size() : " << particles_all.size() << endl;
+  
   // == Fill out general plots
   FillHist("N_particles", particles_all.size(), 1., 40, 0., 40.);
   FillHist("PID_of_first_particle", particles_all.at(0).PID(), 1., 20, 200., 220.);
-  FillHist("Atomic_number_of_second_particle", GetAtomicNumber(particles_all.at(1).PID()), 1., 25, 0., 25.);
+  //FillHist("Atomic_number_of_second_particle", GetAtomicNumber(particles_all.at(1).PID()), 1., 25, 0., 25.);
   FillHist("P_1st_particle", particles_all.at(0).P(), 1., 2000, 0., 2000.);
   FillHist("N_piplus", piplus_all.size(), 1., 10, 0., 10.);
   FillHist("N_protons", protons_all.size(), 1., 10, 0., 10.);
@@ -58,7 +71,7 @@ void PionAnalyzer::executeEvent(){
   // == Run for each smearBit
   TString smear_flags[8] = {"NONE", "P", "Theta", "P_Theta", "Phi", "P_Phi", "Phi_Theta", "All"};
   for(int i_smear=0; i_smear<8; i_smear++){
-    executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
+    //executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
   }
 }
 
@@ -293,20 +306,20 @@ void PionAnalyzer::SR2_FillHist(TString region, TString variable_str, double var
     JSFillHist(region, variable_str + "_Signal_" + region, variable, weight, N_bin, x_min, x_max);
   }
 }
-
+/*
 void PionAnalyzer::Init(){
-  
+
   cout << "Let initiallize!" << endl;
   if(Simulator.Contains("GEANT")){
     Init_GEANT4(fChain);
   }
   else if(Simulator.Contains("FLUKA")){
-
+    Init_FLUKA(fChain);
   }
   else return;
 
 }
-
+*/
 PionAnalyzer::PionAnalyzer(){
 
 }

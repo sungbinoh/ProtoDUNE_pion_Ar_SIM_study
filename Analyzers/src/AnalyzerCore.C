@@ -1,4 +1,6 @@
 #include "AnalyzerCore.h"
+#include "FLUKANtuple.h"
+#include "GEANT4Ntuple.h"
 
 AnalyzerCore::AnalyzerCore(){
   MaxEvent = -1;
@@ -140,14 +142,34 @@ std::vector<Gen> AnalyzerCore::GetAllParticles(){
 std::vector<Gen> AnalyzerCore::GetAllParticles_GEANT4(){
 
   std::vector<Gen> out;
-  for(unsigned int i=0; i< PDGcode->size(); i++){
+  for(unsigned int i=0; i< this_GEANT4Ntuple.PDGcode->size(); i++){
     Gen current_particle;
-    current_particle.SetPIDPosition(PDGcode->at(i), X->at(i), Y->at(i), Z->at(i));
-    current_particle.SetPxPyPzE(Px->at(i), Py->at(i), Pz->at(i), E->at(i));
-    current_particle.SetInterType(interType->at(i));
+    current_particle.SetPIDPosition(this_GEANT4Ntuple.PDGcode->at(i), this_GEANT4Ntuple.X->at(i), this_GEANT4Ntuple.Y->at(i), this_GEANT4Ntuple.Z->at(i));
+    current_particle.SetPxPyPzE(this_GEANT4Ntuple.Px->at(i), this_GEANT4Ntuple.Py->at(i), this_GEANT4Ntuple.Pz->at(i), this_GEANT4Ntuple.E->at(i));
+    current_particle.SetInterType(this_GEANT4Ntuple.interType->at(i));
 
     out.push_back(current_particle);
   }
+
+  return out;
+
+}
+
+std::vector<Gen> AnalyzerCore::GetAllParticles_FLUKA(){
+  
+  std::vector<Gen> out;
+  // -- Push beam first
+  if(this_FLUKANtuple.NIneHits >0){
+    Gen current_beam;
+    current_beam.SetPIDPosition(this_FLUKANtuple.IdIne[0], this_FLUKANtuple.PosIne[0][0], this_FLUKANtuple.PosIne[0][1], this_FLUKANtuple.PosIne[0][2]);
+    current_beam.SetPxPyPzE(this_FLUKANtuple.PIne[0][0], this_FLUKANtuple.PIne[0][1], this_FLUKANtuple.PIne[0][2], this_FLUKANtuple.PIne[0][3]);
+    current_beam.SetInterType(this_FLUKANtuple.TypeIne[0]);
+    out.push_back(current_beam);
+  }
+  // -- Push secondary particles
+  //const int tmp_Np = NSecIne[0];
+
+  // -- 
 
   return out;
 
@@ -209,6 +231,19 @@ std::vector<Gen> AnalyzerCore::GetNuclei(const std::vector<Gen>& particles){
 // Initialize
 //==================
 void AnalyzerCore::initializeAnalyzerTools(){
+
+}
+
+void AnalyzerCore::Init(){
+  
+  cout << "Let initiallize!" << endl;
+  if(Simulator.Contains("GEANT")){
+    this_GEANT4Ntuple.Init_GEANT4(fChain);
+  }
+  else if(Simulator.Contains("FLUKA")){
+    this_FLUKANtuple.Init_FLUKA(fChain);
+  }
+  else return;
 
 }
 
