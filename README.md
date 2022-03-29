@@ -6,9 +6,24 @@ To study interaction between charged pion and Ar nuclear in ProtoDUNE (PD).
 
 ## Example of Running
 
+Clone this repository
+```
+git clone git@github.com:sungbinoh/ProtoDUNE_pion_Ar_SIM_study.git
+```
+
+Compile
 ```
 source setup.sh
 make
+```
+
+To test
+```
+source run_debug.sh
+```
+
+To run whole root files for a sample
+```
 python python/PDStudy.py -a PionAnalyzer -i Piplus_1GeV_Ar -sim GEANT4 -q fastq -n 10 &
 ```
 
