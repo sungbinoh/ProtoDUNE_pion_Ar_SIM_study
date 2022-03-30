@@ -8,10 +8,10 @@
     
     
     
-    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <link rel="shortcut icon" href="../img/favicon.ico">
 
     
-    <title>Plots with mX cut - Piplus_Ar</title>
+    <title>Plots - Piplus_Ar</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -19,16 +19,16 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
     <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../../css/base.min.css" rel="stylesheet">
-    <link href="../../css/cinder.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
 
     
         
         <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
         
     
-    <link href="../../mystyle.css" rel="stylesheet">
+    <link href="../mystyle.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -60,7 +60,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="../..">Piplus_Ar</a>
+              <a class="navbar-brand" href="..">Piplus_Ar</a>
             
         </div>
 
@@ -71,30 +71,30 @@
                 
                 
                     <li >
-                        <a href="../..">Home</a>
+                        <a href="..">Home</a>
                     </li>
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">SR1 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../residual_mass/">Residual mass cut</a>
+    <a href="../SR1/residual_mass/">Residual mass cut</a>
 </li>
 
                         
                             
 <li >
-    <a href="../Q_square/">Q square</a>
+    <a href="../SR1/Q_square/">Q square</a>
 </li>
 
                         
                             
-<li class="active">
-    <a href="./">Plots with mX cut</a>
+<li >
+    <a href="../SR1/Plots_after_residual_mass_cut/">Plots with mX cut</a>
 </li>
 
                         
@@ -110,18 +110,8 @@
                             <i class="fas fa-search"></i> Search
                         </a>
                     </li>
-                    <li >
-                        <a rel="prev" href="../Q_square/">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li class="disabled">
-                        <a rel="next" >
-                            Next <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </li>
                     <li>
-                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/SR1/Plots_after_residual_mass_cut.md"><i class="fab fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/sungbinoh/ProtoDUNE_pion_Ar_SIM_study/edit/102x/docs/plots/README.md"><i class="fab fa-github"></i> Edit on GitHub</a>
                     </li>
             </ul>
         </div>
@@ -133,39 +123,13 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#plots-residual-mass-36310-mev">Plots (residual mass &lt; 36310 MeV)</a></li>
-            <li class="second-level"><a href="#residual-mass">Residual mass</a></li>
-                
-            <li class="second-level"><a href="#momentum">Momentum</a></li>
-                
-            <li class="second-level"><a href="#momentum-balance">Momentum balance</a></li>
-                
-            <li class="second-level"><a href="#q2">Q^2</a></li>
-                
+        <li class="first-level active"><a href="#plots">Plots</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h2 id="plots-residual-mass-36310-mev">Plots (residual mass &lt; 36310 MeV)</h2>
-<p>All plots are drawn after applying momentum and angular smearing.
-At second pad of each plot, ratio between absolute shapes of signal and Z = 17 background is presented.</p>
-<h3 id="residual-mass">Residual mass</h3>
-<p><img alt="Residual mass" src="../../plots/GEANT4/M_residual_SR1_All.png" />
-<img src="../plots/GEANT4/M_residual_SR1_All.png" width="425"/> <img src="../plots/FLUKA/M_residual_SR1_All.png" width="425"/> 
-We can check that cut on residual mass to be smaller than 36310 MeV is applied correctly.</p>
-<h3 id="momentum">Momentum</h3>
-<p><img alt="Proton momentum" src="../../plots/GEANT4/P_proton_SR1_All.png" />
-<img alt="Outgoing pi+ momentum" src="../../plots/GEANT4/P_piplus_SR1_All.png" /></p>
-<p>We see that shapes of signal and Z = 17 backgroud events are different at and nearby the peak.</p>
-<h3 id="momentum-balance">Momentum balance</h3>
-<p><img alt="(P(pi+) - P(p)) / P(pi+)" src="../../plots/GEANT4/P_balance_piplus_p_SR1_All.png" />
-<img alt="(P(beam) - P(pi+)) / P(beam)" src="../../plots/GEANT4/P_balance_beam_piplus_SR1_All.png" />
-<img alt="(P(beam) - P(p)) / P(beam)" src="../../plots/GEANT4/P_balance_beam_p_SR1_All.png" /></p>
-<p>Momentum balance distributions show more similar shapes between signal and Z = 17 background than momentum plots.</p>
-<h3 id="q2">Q^2</h3>
-<p><img alt="Q square" src="../../plots/GEANT4/Q_square_SR1_All.png" /></p>
-<p><span class="arithmatex"><span class="MathJax_Preview">{Q}^{2}</span><script type="math/tex">{Q}^{2}</script></span> distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span>, 1 <span class="arithmatex"><span class="MathJax_Preview">{GeV}^{2}</span><script type="math/tex">{GeV}^{2}</script></span>] range.
-It could be used for Z = 17 background estimation.</p></div>
+<h1 id="plots">Plots</h1>
+<p>Directory for output plots</p></div>
         
         
     </div>
@@ -185,7 +149,7 @@ It could be used for Z = 17 background estimation.</p></div>
       </footer>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
@@ -193,11 +157,11 @@ It could be used for Z = 17 background estimation.</p></div>
     <script>hljs.initHighlightingOnLoad();</script>
     
 
-    <script>var base_url = "../.."</script>
+    <script>var base_url = ".."</script>
     
-    <script src="../../js/base.js"></script>
+    <script src="../js/base.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script src="../../search/main.js"></script>
+    <script src="../search/main.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
