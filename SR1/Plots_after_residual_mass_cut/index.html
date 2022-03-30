@@ -155,19 +155,19 @@ At second pad of each plot, ratio between absolute shapes of signal and Z = 17 b
 <p>Since particle ID is 9999 for all nuclei for FLUKA samples, there should be method to assign Z and A for residual nuclei to select signal and Z = 17 background events.
 Unfortunately, current FLUKA samples do not have 4-vectors of residual nuclei with mass close to Ar.</p>
 <p><img alt="" src="../M_nuclei_SR1_all.png" /></p>
-<p>The figure shows mass of paticles with particle ID greater than 9000 after at SR1 without mX' cut in GeV unit.
-There is no nuclear with mass greater than 34 GeV. Therefore, we need to find out Z and A of residual nuclei using other secondary particles.</p>
-<p>After applying mX &lt; 36.310 GeV cut, we observe that most of event do not have additional nuclear (particle Id &gt; 9000) as secondary particle (bellow figure).</p>
-<p><img alt="" src="../N_nuclei_GEANT4.png" /></p>
+<p>The figure shows mass of paticles with particle ID greater than 9000 in GeV unit at SR1 without mX' cut.
+There is no nuclear with mass greater than 34 GeV. Therefore, we need to find out Z and A of residual nuclei using information coming from other secondary particles.</p>
+<p>After applying mX &lt; 36.310 GeV cut, we observe that most of events do not have additional nuclear (particle ID &gt; 9000) as secondary particle (bellow figure).</p>
+<p><img alt="" src="../N_nuclei_FLUKA.png" /></p>
 <p>So, we can find out Z and A of residual nuclei using total electric charge and baryon number of other secondary particles (mostly pi+, pi-, proton, neutron).</p>
 <p><span class="arithmatex"><span class="MathJax_Preview">{Z}_{res} = {Z}_{Ar} (= 18) - N({\pi}^{+}) + 1 (beam~is~{\pi}^{+}) + N({\pi}^{-}) - N(proton)</span><script type="math/tex">{Z}_{res} = {Z}_{Ar} (= 18) - N({\pi}^{+}) + 1 (beam~is~{\pi}^{+}) + N({\pi}^{-}) - N(proton)</script></span><br />
 <span class="arithmatex"><span class="MathJax_Preview">{A}_{res} = {A}_{Ar} (= 40) - N(protons) - N(neutrons)</span><script type="math/tex">{A}_{res} = {A}_{Ar} (= 40) - N(protons) - N(neutrons)</script></span>   </p>
 <p>In addition, we need to condiser about 1% of signal events which have one additional nuclear as secondary particle.
 (Events with at least two additional secondary particles are about 0.01% compared to total events at SR1 with mX' &lt; 36.310 GeV cut. So, they are negligible.)</p>
 <p><img alt="" src="../M_nuclei_FLUKA.png" /></p>
-<p>The above figure shows that most of additional nuclei are 4He. It is about 1% compared  to total events at SR1 with mX' &lt; 36.310 GeV cut,
-whiile other nuclei make contribution of about 0.05%. Therefore, we select events with exacly one additional nuclear and check if its mass is in window from 4He mass.
-If it is true, we apply additional correction the <span class="arithmatex"><span class="MathJax_Preview">{Z}_{res}</span><script type="math/tex">{Z}_{res}</script></span> and <span class="arithmatex"><span class="MathJax_Preview">{A}_{res}</span><script type="math/tex">{A}_{res}</script></span> as</p>
+<p>The above figure shows that most of additional nuclei are <span class="arithmatex"><span class="MathJax_Preview">{}^{4}</span><script type="math/tex">{}^{4}</script></span>He. It is about 1% compared   to total events at SR1 with mX' &lt; 36.310 GeV cut,
+while other nuclei make contribution of about 0.05%. Therefore, we select events with exacly one additional nuclear and check if its mass is in window from <span class="arithmatex"><span class="MathJax_Preview">{}^{4}</span><script type="math/tex">{}^{4}</script></span>He mass.
+If it is true, we apply additional correction to <span class="arithmatex"><span class="MathJax_Preview">{Z}_{res}</span><script type="math/tex">{Z}_{res}</script></span> and <span class="arithmatex"><span class="MathJax_Preview">{A}_{res}</span><script type="math/tex">{A}_{res}</script></span> as</p>
 <p><span class="arithmatex"><span class="MathJax_Preview">{Z}_{res} = {Z}_{res}  - 2</span><script type="math/tex">{Z}_{res} = {Z}_{res}  - 2</script></span><br />
 <span class="arithmatex"><span class="MathJax_Preview">{A}_{res} = {A}_{Ar} - 4</span><script type="math/tex">{A}_{res} = {A}_{Ar} - 4</script></span>  </p>
 <h3 id="residual-mass">Residual mass</h3>
