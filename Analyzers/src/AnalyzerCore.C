@@ -145,7 +145,7 @@ std::vector<Gen> AnalyzerCore::GetAllParticles_GEANT4(){
   for(unsigned int i=0; i< this_GEANT4Ntuple.PDGcode->size(); i++){
     Gen current_particle;
     current_particle.SetPIDPosition(this_GEANT4Ntuple.PDGcode->at(i), this_GEANT4Ntuple.X->at(i), this_GEANT4Ntuple.Y->at(i), this_GEANT4Ntuple.Z->at(i));
-    current_particle.SetPxPyPzE(this_GEANT4Ntuple.Px->at(i), this_GEANT4Ntuple.Py->at(i), this_GEANT4Ntuple.Pz->at(i), this_GEANT4Ntuple.E->at(i));
+    current_particle.SetPxPyPzE(this_GEANT4Ntuple.Px->at(i) / 1000., this_GEANT4Ntuple.Py->at(i) / 1000., this_GEANT4Ntuple.Pz->at(i) / 1000., this_GEANT4Ntuple.E->at(i) / 1000.); // MeV to GeV
     current_particle.SetInterType(this_GEANT4Ntuple.interType->at(i));
 
     out.push_back(current_particle);
@@ -166,10 +166,17 @@ std::vector<Gen> AnalyzerCore::GetAllParticles_FLUKA(){
     current_beam.SetInterType(this_FLUKANtuple.TypeIne[0]);
     out.push_back(current_beam);
   }
-  // -- Push secondary particles
-  //const int tmp_Np = NSecIne[0];
 
-  // -- 
+  // -- Push secondary particles
+  const unsigned int N_secondary_particles = this_FLUKANtuple.NSecIne[0];
+  for(unsigned int i=0; i < N_secondary_particles; i++){
+    Gen current_particle;
+    current_particle.SetPIDPosition(this_FLUKANtuple.IdSecIne[i], this_FLUKANtuple.PosIne[0][0], this_FLUKANtuple.PosIne[0][1], this_FLUKANtuple.PosIne[0][2]);
+    current_particle.SetPxPyPzE(this_FLUKANtuple.PSec[i][0], this_FLUKANtuple.PSec[i][1], this_FLUKANtuple.PSec[i][2], this_FLUKANtuple.PSec[i][3]);
+    current_particle.SetInterType(this_FLUKANtuple.TypeIne[0]);
+
+    out.push_back(current_particle);
+  }
 
   return out;
 
@@ -185,11 +192,31 @@ std::vector<Gen> AnalyzerCore::GetPiplus(const std::vector<Gen>& particles, doub
   return out;
 }
 
+std::vector<Gen> AnalyzerCore::GetPiminus(const std::vector<Gen>& particles, double min_P){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == -211 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
+
 std::vector<Gen> AnalyzerCore::GetProtons(const std::vector<Gen>& particles, double min_P){
 
   std::vector<Gen> out;
   for(unsigned int i=0; i<particles.size(); i++){
     if(particles.at(i).PID() == 2212 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
+  }
+
+  return out;
+}
+
+std::vector<Gen> AnalyzerCore::GetNeutrons(const std::vector<Gen>& particles, double min_P){
+
+  std::vector<Gen> out;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == 2112 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
   }
 
   return out;
@@ -221,8 +248,15 @@ std::vector<Gen> AnalyzerCore::GetBkgParticles(const std::vector<Gen>& particles
 std::vector<Gen> AnalyzerCore::GetNuclei(const std::vector<Gen>& particles){
 
   std::vector<Gen> out;
-  for(unsigned int i=0; i<particles.size(); i++){
-    if(particles.at(i).PID() > 1000000000) out.push_back(particles.at(i));
+  if(Simulator.Contains("GEANT")){
+    for(unsigned int i=0; i<particles.size(); i++){
+      if(particles.at(i).PID() > 1000000000) out.push_back(particles.at(i));
+    }
+  }
+  if(Simulator.Contains("FLUKA")){
+    for(unsigned int i=0; i<particles.size(); i++){
+      if(particles.at(i).PID() > 9000) out.push_back(particles.at(i));
+    }
   }
 
   return out;
@@ -278,8 +312,6 @@ int AnalyzerCore::GetAtomicMass(int pid){
   return out;
 
 }
-
-
 
 //==================
 //==== Plotting

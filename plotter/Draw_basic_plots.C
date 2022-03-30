@@ -118,7 +118,7 @@ void draw_signal_Z17bkg(TString dir, TString histname, double xmin, double xmax,
   mappad[pad2] -> Draw();
   mappad[pad2] -> cd();
 
-  TString name_x = "MeV";
+  TString name_x = "GeV";
   if(histname.Contains("balance")) name_x = "Balance";
   if(histname.Contains("Q_square")) name_x = "GeV^{2}";
 
@@ -134,7 +134,7 @@ void draw_signal_Z17bkg(TString dir, TString histname, double xmin, double xmax,
   pad2_template -> GetYaxis() -> SetTitleOffset(0.5);
   pad2_template -> GetYaxis() -> SetLabelSize(0.08);
   pad2_template -> GetYaxis() -> SetNdivisions(505);
-  pad2_template -> GetYaxis() -> SetRangeUser(0.0, 2.5);
+  pad2_template -> GetYaxis() -> SetRangeUser(0.5, 1.5);
   pad2_template -> SetStats(0);
   pad2_template -> Draw("histsame");
 
@@ -142,14 +142,40 @@ void draw_signal_Z17bkg(TString dir, TString histname, double xmin, double xmax,
   TH1D *signal_abs = (TH1D*)maphist[histname + "_Signal_" +dir] -> Clone();
   Z17_abs -> Scale(1./Z17_abs -> Integral());
   signal_abs -> Scale(1./signal_abs -> Integral());
-  signal_abs -> Divide(Z17_abs);
-  signal_abs -> SetLineColor(kBlue);
-  signal_abs -> Draw("histsame");
+  Z17_abs -> Divide(signal_abs);
+
+  TH1D *error_band = (TH1D*)signal_abs -> Clone();
+  int N_bin = error_band -> GetNbinsX();
+  cout << "N_bin : " << N_bin << endl;
+  for(int i = 1; i < N_bin + 1; i++){
+    double current_bin_content = error_band -> GetBinContent(i);
+    double current_bin_error = error_band -> GetBinError(i);
+    error_band -> SetBinContent(i, 1.);
+    error_band -> SetBinError(i, current_bin_error/current_bin_content);
+    if(current_bin_content < 1.0e-10) error_band -> SetBinContent(i, 1000.);
+  }
+  error_band -> SetFillColor(kOrange);
+  error_band -> SetLineColor(kWhite);
+  error_band -> SetMarkerSize(0);
+  error_band -> Draw("E2same");
+  Z17_abs -> SetLineColor(kBlue);
+  Z17_abs -> SetMarkerColor(kBlue);
+  Z17_abs -> Draw("epsame");
+
+  maplegend["bottom" + legend] = new TLegend(0.2, 0.85, 0.4, 0.95);
+  maplegend["bottom" + legend]->SetBorderSize(0);
+  maplegend["bottom" + legend]->SetNColumns(3);
+  maplegend["bottom" + legend]->AddEntry(error_band, "Stat.", "f");
+  //maplegend["bottom" + legend]->AddEntry(data_hist, "Obs./Pred.", "p");
+  maplegend["bottom" + legend]->Draw("same");
 
   TLine *pad2_line = new TLine(xmin, 1, xmax, 1);
   pad2_line -> SetLineStyle(1);
   pad2_line -> SetLineColor(kBlue);
   pad2_line -> Draw("same");
+  
+  pad2_template -> Draw("same");
+  mappad[pad2] -> Draw("same");
 
   ////////////////////////////////////
   // == Latex
@@ -203,12 +229,13 @@ void Draw_basic_plots(int i_simulaor = 0){
   else if(i_simulaor == 1) Simulator = "FLUKA";
   else return;
 
-  submit_signal_Z17bkg("SR1", "M_residual", 36200., 36400., true);
+  submit_signal_Z17bkg("SR1", "M_residual", 36.200, 36.400, true);
   submit_signal_Z17bkg("SR1", "Q_square", 0., 2., true);
   submit_signal_Z17bkg("SR1", "P_balance_piplus_p", -3., 1., true);
   submit_signal_Z17bkg("SR1", "P_balance_beam_piplus", -0.2, 0.9, true);
   submit_signal_Z17bkg("SR1", "P_balance_beam_p", -0.8, 0.8, true);
-  submit_signal_Z17bkg("SR1", "P_proton", 200., 1500., true);
-  submit_signal_Z17bkg("SR1", "P_piplus", 10., 1100., true);
+  submit_signal_Z17bkg("SR1", "P_proton", 0.2, 1.5, true);
+  submit_signal_Z17bkg("SR1", "P_piplus", 0., 1.1, true);
+  
 
 }
