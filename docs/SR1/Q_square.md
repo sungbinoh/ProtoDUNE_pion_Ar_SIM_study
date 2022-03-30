@@ -46,4 +46,3 @@ We observe what we expected.
 ![Zoomed more](Q2_VS_p_bal_piplus_p_bkg_zoom2.png)
 
 Z = 17 background shows a wider distributions along momentum balance because additional neutrons share momentum.
-
