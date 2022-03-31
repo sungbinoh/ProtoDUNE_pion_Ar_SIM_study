@@ -65,3 +65,9 @@ Momentum balance distributions show more similar shapes between signal and Z = 1
 
 ${Q}^{2}$ distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 ${GeV}^{2}$, 1 ${GeV}^{2}$] range.
 It could be used for Z = 17 background estimation.
+
+### Energy transfer
+
+<img src="../../plots/GEANT4/Delta_E_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/Delta_E_SR1_All.png" width="45%"/>
+
+These figures show E(beam) - E(piplus), the energy transfer during scattering. We observe similar tendency which is observed in ${Q}^{2}$ plots. 
