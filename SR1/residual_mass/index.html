@@ -139,6 +139,7 @@
             <li class="second-level"><a href="#residual-mass-distribution-after-smearing">Residual mass distribution after smearing</a></li>
                 
                 <li class="third-level"><a href="#how-many-additional-neutrons">How many additional neutrons?</a></li>
+                <li class="third-level"><a href="#neutron-momentum">Neutron momentum</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -161,10 +162,18 @@ We want to check,  </p>
 <li>How many neutrons at truth level after scattering?</li>
 <li>Which cut value on residual mass will give good signal purity?</li>
 </ul>
-<p><img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.200_36.400.png "  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.200_36.400.png " width="45%"/>
+<p><img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.200_36.400.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.200_36.400.png" width="45%"/>
 <img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.230_36.310.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.230_36.310.png" width="45%"/>
 <img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.230_36.280.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.230_36.280.png" width="45%"/>
-<img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.230_36.255.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.230_36.255.png" width="45%"/></p></div>
+<img src="../../plots/GEANT4/M_residual_Nn_SR1_All_36.230_36.255.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_Nn_SR1_All_36.230_36.255.png" width="45%"/></p>
+<p>We observed that GEANT4 shows more signal events.
+Both generators show that background events are dominated by events coming from Z = 17 background.</p>
+<h3 id="neutron-momentum">Neutron momentum</h3>
+<p>To understand possibility of Z = 17 background rejection using neutron tagging, we need to check momentum of neutrons.</p>
+<p><img src="../../plots/GEANT4/P_neutron_1st_SR1_All.png "  width="45%"  /> <img src="../../plots/FLUKA/P_neutron_1st_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_neutron_2nd_SR1_All.png "  width="45%"  /> <img src="../../plots/FLUKA/P_neutron_2nd_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_neutron_3rd_SR1_All.png "  width="45%"  /> <img src="../../plots/FLUKA/P_neutron_3rd_SR1_All.png" width="45%"/></p>
+<p>Most of the neutrons have momentum smaller than 150 MeV.</p></div>
         
         
     </div>
