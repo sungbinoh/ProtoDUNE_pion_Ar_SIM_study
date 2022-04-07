@@ -37,37 +37,37 @@ ${A}_{res} = {A}_{Ar} - 4$
 
 ### Residual mass
 
-<img src="../../plots/GEANT4/M_residual_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_SR1_All.png" width="45%"/> 
+<img src="../../plots/GEANT4/M_residual_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/M_residual_SR1_All_mXcut.png" width="45%"/> 
 
 We can check that cut on residual mass to be smaller than 36310 MeV is applied correctly.
 
 ### Momentum
 
-<img src="../../plots/GEANT4/P_proton_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/P_proton_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_proton_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/P_proton_SR1_All_mXcut.png" width="45%"/>
 
-<img src="../../plots/GEANT4/P_piplus_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/P_piplus_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_piplus_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/P_piplus_SR1_All_mXcut.png" width="45%"/>
 
 We see that shapes of signal and Z = 17 backgroud events are different at and nearby the peak.
 
 ### Momentum balance
 
-<img src="../../plots/GEANT4/P_balance_piplus_p_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_piplus_p_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_balance_piplus_p_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_piplus_p_SR1_All_mXcut.png" width="45%"/>
 
-<img src="../../plots/GEANT4/P_balance_beam_piplus_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_beam_piplus_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_balance_beam_piplus_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_beam_piplus_SR1_All_mXcut.png" width="45%"/>
 
-<img src="../../plots/GEANT4/P_balance_beam_p_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_beam_p_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/P_balance_beam_p_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/P_balance_beam_p_SR1_All_mXcut.png" width="45%"/>
 
 Momentum balance distributions show more similar shapes between signal and Z = 17 background than momentum plots.
 
 ### Q^2
 
-<img src="../../plots/GEANT4/Q_square_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/Q_square_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/Q_square_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/Q_square_SR1_All_mXcut.png" width="45%"/>
 
 ${Q}^{2}$ distributions show that shape between signal and Z = 17 are almost same where Q^2 is in [0.15 ${GeV}^{2}$, 1 ${GeV}^{2}$] range.
 It could be used for Z = 17 background estimation.
 
 ### Energy transfer
 
-<img src="../../plots/GEANT4/Delta_E_SR1_All.png"  width="45%"  /> <img src="../../plots/FLUKA/Delta_E_SR1_All.png" width="45%"/>
+<img src="../../plots/GEANT4/Delta_E_SR1_All_mXcut.png"  width="45%"  /> <img src="../../plots/FLUKA/Delta_E_SR1_All_mXcut.png" width="45%"/>
 
 These figures show E(beam) - E(piplus), the energy transfer during scattering. We observe similar tendency which is observed in ${Q}^{2}$ plots. 
