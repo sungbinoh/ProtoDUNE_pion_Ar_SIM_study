@@ -101,6 +101,7 @@ public:
   //==================
   // Get Particles
   //==================
+  inline static bool PComparing(const Particle& p1, const Particle& p2){ return (p1.P() > p2.P()); }
 
   Event GetEvent();
 

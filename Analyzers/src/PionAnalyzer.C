@@ -31,7 +31,6 @@ void PionAnalyzer::executeEvent(){
 
   if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] : called all particles" << endl;
 
-  
   // == Collect particles depending on PDG ID. Cut on momuntum : .P() > 0.
   std::vector<Gen> piplus_all = GetPiplus(particles_all, 0.);
   std::vector<Gen> protons_all = GetProtons(particles_all, 0.);
@@ -42,7 +41,7 @@ void PionAnalyzer::executeEvent(){
   //std::vector<Gen> piplus_mom_smear = GetPiplus(smear->SmearOutParticles(piplus_all, 1), 100.);
 
   if(debug_mode) cout << "[[PionAnalyzer::executeEvent]] particles_all.size() : " << particles_all.size() << endl;
-  
+
   // == Fill out general plots
   FillHist("N_particles", particles_all.size(), 1., 40, 0., 40.);
   FillHist("PID_of_first_particle", particles_all.at(0).PID(), 1., 20, 200., 220.);
@@ -69,7 +68,7 @@ void PionAnalyzer::executeEvent(){
   // == Run for each smearBit
   TString smear_flags[8] = {"NONE", "P", "Theta", "P_Theta", "Phi", "P_Phi", "Phi_Theta", "All"};
   for(int i_smear=0; i_smear<8; i_smear++){
-    executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
+    if(i_smear == 0 || i_smear == 7) executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
   }
 }
 
@@ -107,8 +106,18 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
     
     current_atomic_number = 18 - piplus_nocut.size() + 2 + piminus_nocut.size() - protons_nocut.size();
     current_atomic_mass = 40 - protons_nocut.size() - neutrons_nocut.size();
+
+    if(nuclei.size() > 0){
+      if(fabs(nuclei.at(0).M() - 3.72738) < 0.01){
+	//cout << "nuclei.at(0).M() : " << nuclei.at(0).M() << endl;
+	current_atomic_number = current_atomic_number - 2;
+	current_atomic_mass = current_atomic_mass - 4;
+      }
+      else return;
+    }
   }
 
+  std::vector<Gen> neutrons_all = GetNeutrons(particles_all, 0.);
 
 
   // -- Calculate residual mass
@@ -118,16 +127,14 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
   Particle residual_reco = beam + Ar_target - piplus.at(1) - protons.at(0);
   double residual_mass = residual_reco.M();
 
-  // -- Apply residual mass cut
-  if(residual_mass > 36.310) return;
-  
   // -- Calculate additional variables
-  double Q_square = 0., Q = 0., q0 = 0., y = 0., sqrt_s = 0.;
+  double Q_square{0.}, Q{0.}, q0{0.}, y{0.}, sqrt_s{0.}, Delta_E{0.};
   Particle q_4vec = beam - piplus.at(1);
   Q_square = (-pow(q_4vec.E(), 2) + pow(q_4vec.P(), 2));
   Q = pow(Q_square, 0.5);
   q0 = q_4vec.E();
   y = (beam.E() - piplus.at(1).E()) / beam.E();
+  Delta_E = beam.E() - piplus.at(1).E();
   sqrt_s = (beam + Ar_target).M();
 
   double P_balance_piplus_p = ( piplus.at(1).P() - protons.at(0).P() ) / piplus.at(1).P();
@@ -136,17 +143,19 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
 
   // -- Draw plots
   TString region = "SR1_" + smear_flag;
+  //if(residual_mass > 36.310) return;
   
   SR1_FillHist(region, "M_residual", residual_reco.M(), current_atomic_number, current_atomic_mass, 1., 200, 36.200, 36.400);
   SR1_FillHist(region, "Q_square", Q_square, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
   SR1_FillHist(region, "q0", q0, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
   SR1_FillHist(region, "y", y, current_atomic_number, current_atomic_mass, 1., 100, 0., 1.0);
+  SR1_FillHist(region, "Delta_E", Delta_E, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
   SR1_FillHist(region, "P_balance_piplus_p", P_balance_piplus_p, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
   SR1_FillHist(region, "P_balance_beam_piplus", P_balance_beam_piplus, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
   SR1_FillHist(region, "P_balance_beam_p", P_balance_beam_p, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
   SR1_FillHist(region, "P_proton", protons.at(0).P(), current_atomic_number, current_atomic_mass, 1., 200, 0., 2.);
   SR1_FillHist(region, "P_piplus", piplus.at(1).P(), current_atomic_number, current_atomic_mass, 1., 200, 0., 2.);
-
+  
   // -- Plots for all
   JSFillHist(region, "Z_" + region, current_atomic_number, 1., 20, 0., 20.);
   JSFillHist(region, "N_nuclei_" + region, nuclei.size(), 1., 20, 0., 20.);
@@ -173,6 +182,11 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
 	JSFillHist(region, "Q_square_VS_P_balance_beam_piplus_" + TString::Itoa(current_atomic_number, 10) + "_" + region, Q_square, P_balance_beam_piplus, 1., 200, 0., 2.0, 80, -3., 1.);
 	JSFillHist(region, "Q_square_VS_P_balance_beam_p_" + TString::Itoa(current_atomic_number, 10) + "_" + region, Q_square, P_balance_beam_p, 1., 200, 0., 2.0, 80, -3., 1.);
 	JSFillHist(region, "P_balance_beam_piplus_VS_P_balance_beam_p_" + TString::Itoa(current_atomic_number, 10) + "_" + region, P_balance_beam_piplus, P_balance_beam_p, 1., 80, -3., 1.0, 80, -3., 1.);
+	if(neutrons_all.size() > 0){
+	  for(unsigned int i_n = 0; i_n < neutrons_all.size(); i_n ++){
+	    JSFillHist(region, "P_neutron_Nn_" + TString::Itoa(neutrons_all.size(), 10) + "_" + TString::Itoa(i_n, 10) + "th_n_" + region, neutrons_all.at(i_n).P(), 1., 1000, 0., 1.);
+	  }
+	}
       }
     }
   }  
@@ -205,7 +219,74 @@ void PionAnalyzer::SR1(int smearBit, TString smear_flag, std::vector<Gen> partic
   }
   
   //if(debug_mode && smear_flag == "NONE") cout << "[[PionAnalyzer::SR1]] residual_reco.M() : " << residual_reco.M() << endl;
-  if(debug_mode && smear_flag == "NONE") cout << "[[PionAnalyzer::SR1]] Q_square : " << Q_square << ", Q : " << Q << endl;
+  //if(debug_mode && smear_flag == "NONE") cout << "[[PionAnalyzer::SR1]] Q_square : " << Q_square << ", Q : " << Q << endl;
+
+  // -- Draw plots agains after applying residual mass cut
+  if(residual_mass > 36.310) return;
+  region = region + "_mXcut";
+
+  SR1_FillHist(region, "M_residual", residual_reco.M(), current_atomic_number, current_atomic_mass, 1., 200, 36.200, 36.400);
+  SR1_FillHist(region, "Q_square", Q_square, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
+  SR1_FillHist(region, "q0", q0, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
+  SR1_FillHist(region, "y", y, current_atomic_number, current_atomic_mass, 1., 100, 0., 1.0);
+  SR1_FillHist(region, "Delta_E", Delta_E, current_atomic_number, current_atomic_mass, 1., 200, 0., 2.0);
+  SR1_FillHist(region, "P_balance_piplus_p", P_balance_piplus_p, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
+  SR1_FillHist(region, "P_balance_beam_piplus", P_balance_beam_piplus, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
+  SR1_FillHist(region, "P_balance_beam_p", P_balance_beam_p, current_atomic_number, current_atomic_mass, 1., 80, -3., 1.0);
+  SR1_FillHist(region, "P_proton", protons.at(0).P(), current_atomic_number, current_atomic_mass, 1., 200, 0., 2.);
+  SR1_FillHist(region, "P_piplus", piplus.at(1).P(), current_atomic_number, current_atomic_mass, 1., 200, 0., 2.);
+
+  JSFillHist(region, "Z_" + region, current_atomic_number, 1., 20, 0., 20.);
+  JSFillHist(region, "N_nuclei_" + region, nuclei.size(), 1., 20, 0., 20.);
+  if(nuclei.size() > 0){
+    JSFillHist(region, "M_nuclei_" + region, nuclei.at(0).M(), 1., 20000, 0., 20.);
+  }
+  JSFillHist(region, "M_residual_VS_P_proton_" + region, residual_reco.M(), protons.at(0).P(), 1., 140, 36.240, 36.380, 70, 300., 1000.);
+
+  if(current_atomic_number > 13){
+    if(current_atomic_number != 17){
+
+    }
+    else{ // -- Plots for Z = 17 bkg
+      if(current_atomic_mass != 39){
+        int N_neutron = GetNPID(particles_all, 2112);
+        int N_gamma = GetNPID(particles_all, 22);
+        JSFillHist(region, "N_neutron_" + TString::Itoa(current_atomic_number, 10) + "_" + region, N_neutron, 1., 20, 0., 20.);
+        JSFillHist(region, "N_neutron_VS_N_gamma_" + TString::Itoa(current_atomic_number, 10) + "_" + region, N_neutron, N_gamma, 1., 8, 0., 8., 8, 0., 8.);
+        JSFillHist(region, "M_residual_" + TString::Itoa(current_atomic_number, 10) + "_Nn_" + TString::Itoa(N_neutron, 10) + "_" + region, residual_reco.M(), 1., 200, 36.200, 36.400);
+        JSFillHist(region, "M_residual_VS_P_proton_" + TString::Itoa(current_atomic_number, 10) + "_" + region, residual_reco.M(), protons.at(0).P(), 1., 140, 36.240, 36.380, 70, 300., 1000.);
+        JSFillHist(region, "M_residual_VS_P_piplus_" + TString::Itoa(current_atomic_number, 10) + "_" + region, residual_reco.M(), piplus.at(1).P(), 1., 140, 36.240, 36.380, 90, 100., 1000.);
+        JSFillHist(region, "Q_square_VS_P_balance_piplus_p_" + TString::Itoa(current_atomic_number, 10) + "_" + region, Q_square, P_balance_piplus_p, 1., 200, 0., 2.0, 80, -3., 1.);
+        JSFillHist(region, "Q_square_VS_P_balance_beam_piplus_" + TString::Itoa(current_atomic_number, 10) + "_" + region, Q_square, P_balance_beam_piplus, 1., 200, 0., 2.0, 80, -3., 1.);
+        JSFillHist(region, "Q_square_VS_P_balance_beam_p_" + TString::Itoa(current_atomic_number, 10) + "_" + region, Q_square, P_balance_beam_p, 1., 200, 0., 2.0, 80, -3., 1.);
+        JSFillHist(region, "P_balance_beam_piplus_VS_P_balance_beam_p_" + TString::Itoa(current_atomic_number, 10) + "_" + region, P_balance_beam_piplus, P_balance_beam_p, 1., 80, -3., 1.0, 80, -3., 1.);
+        if(neutrons_all.size() > 0){
+          for(unsigned int i_n = 0; i_n < neutrons_all.size(); i_n ++){
+            JSFillHist(region, "P_neutron_Nn_" + TString::Itoa(N_neutron, 10) + "_" + TString::Itoa(i_n, 10) + "th_n_" + region, neutrons_all.at(i_n).P(), 1., 1000, 0., 1.);
+          }
+        }
+      }
+    }
+  }
+  else{
+
+  }
+ 
+  if(current_atomic_number == 17 && current_atomic_mass == 39){
+    JSFillHist(region, "Z_Signal_" + region, current_atomic_number, 1., 20, 0., 20.);
+    int N_gamma = GetNPID(particles_all, 22);
+    JSFillHist(region, "N_gamma_Signal_" + region, N_gamma, 1., 20, 0., 20.);
+    JSFillHist(region, "Q_square_Ngamma_" + TString::Itoa(N_gamma, 10) + "_" + region, Q_square, 1., 200, 0., 2.0);
+    JSFillHist(region, "Q_square_VS_y_" + region, Q_square, y, 1., 200, 0., 2.0, 100, 0., 1.0);
+    JSFillHist(region, "M_residual_VS_Q_square_" + region, residual_reco.M(), Q_square, 1., 200, 0., 2.0, 100, 0., 1.0);
+    JSFillHist(region, "M_residual_VS_P_proton_Signal_" + region, residual_reco.M(), protons.at(0).P(), 1., 140, 36.240, 36.380, 70, 300., 1000.);
+    JSFillHist(region, "M_residual_VS_P_piplus_Signal_" + region, residual_reco.M(), piplus.at(1).P(), 1., 140, 36.240, 36.380, 90, 100., 1000.);
+    JSFillHist(region, "Q_square_VS_P_balance_piplus_p_Signal_" + region, Q_square, P_balance_piplus_p, 1., 200, 0., 2.0, 80, -3., 1.);
+    JSFillHist(region, "Q_square_VS_P_balance_beam_piplus_Signal_" + region, Q_square, P_balance_beam_piplus, 1., 200, 0., 2.0, 80, -3., 1.);
+    JSFillHist(region, "Q_square_VS_P_balance_beam_p_Signal_" + region, Q_square, P_balance_beam_p, 1., 200, 0., 2.0, 80, -3., 1.);
+    JSFillHist(region, "P_balance_beam_piplus_VS_P_balance_beam_p_Signal_" + region, P_balance_beam_piplus, P_balance_beam_p, 1., 80, -3., 1.0, 80, -3., 1.);
+  }
+
 }
 
 void PionAnalyzer::SR2(int smearBit, TString smear_flag, std::vector<Gen> particles_all, std::vector<Gen> piplus, std::vector<Gen> protons, std::vector<Gen> pizeros, std::vector<Gen> bkg_particles, std::vector<Gen> nuclei){

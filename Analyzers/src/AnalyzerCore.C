@@ -152,7 +152,6 @@ std::vector<Gen> AnalyzerCore::GetAllParticles_GEANT4(){
   }
 
   return out;
-
 }
 
 std::vector<Gen> AnalyzerCore::GetAllParticles_FLUKA(){
@@ -209,6 +208,7 @@ std::vector<Gen> AnalyzerCore::GetProtons(const std::vector<Gen>& particles, dou
     if(particles.at(i).PID() == 2212 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
   }
 
+  std::sort(out.begin(), out.end(), PComparing);
   return out;
 }
 
@@ -219,6 +219,7 @@ std::vector<Gen> AnalyzerCore::GetNeutrons(const std::vector<Gen>& particles, do
     if(particles.at(i).PID() == 2112 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
   }
 
+  std::sort(out.begin(), out.end(), PComparing);
   return out;
 }
 
@@ -229,6 +230,7 @@ std::vector<Gen> AnalyzerCore::GetPizeros(const std::vector<Gen>& particles, dou
     if(particles.at(i).PID() == 111 && particles.at(i).P() > min_P) out.push_back(particles.at(i));
   }
 
+  std::sort(out.begin(), out.end(), PComparing);
   return out;
 }
 
