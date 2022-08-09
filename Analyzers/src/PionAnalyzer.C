@@ -47,12 +47,13 @@ void PionAnalyzer::executeEvent(){
   FillHist("PID_of_first_particle", particles_all.at(0).PID(), 1., 20, 200., 220.);
   //FillHist("Atomic_number_of_second_particle", GetAtomicNumber(particles_all.at(1).PID()), 1., 25, 0., 25.);
   FillHist("P_1st_particle", particles_all.at(0).P(), 1., 2000, 0., 2000.);
-  FillHist("N_piplus", piplus_all.size(), 1., 10, 0., 10.);
+  //FillHist("N_piplus", piplus_all.size(), 1., 10, 0., 10.);
   FillHist("N_protons", protons_all.size(), 1., 10, 0., 10.);
   FillHist("N_pizeros", pizeros_all.size(), 1., 10, 0., 10.);
   FillHist("N_bkg_particles", bkg_particles.size(), 1., 20, 0., 20.);
   FillHist("N_nuclei", nuclei.size(), 1., 20, 0., 20.);
-  
+
+  QE_Study(particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
   // == Print out for debugging
   //if(debug_mode) cout << "-------" << endl;
   if(debug_mode){
@@ -68,7 +69,87 @@ void PionAnalyzer::executeEvent(){
   // == Run for each smearBit
   TString smear_flags[8] = {"NONE", "P", "Theta", "P_Theta", "Phi", "P_Phi", "Phi_Theta", "All"};
   for(int i_smear=0; i_smear<8; i_smear++){
-    if(i_smear == 0 || i_smear == 7) executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
+    //if(i_smear == 0 || i_smear == 7) executeEventWithVariables(i_smear, smear_flags[i_smear], particles_all, piplus_all, protons_all, pizeros_all, bkg_particles, nuclei);
+  }
+}
+
+void PionAnalyzer::QE_Study(std::vector<Gen> particles_all, std::vector<Gen> piplus_all, std::vector<Gen> protons_all, std::vector<Gen> pizeros_all, std::vector<Gen> bkg_particles, std::vector<Gen> nuclei){
+  
+  // == N particles
+  FillHist("P_beam", particles_all.at(0).P() * 1000., 1., 2000., 0., 2000.);
+  //cout << "[PionAnalyzer::QE_Study] Beam Pz : " << particles_all.at(0).Pz() * 1000. << ", E_beam : " << particles_all.at(0).E() * 1000. << endl;
+  FillHist("N_piplus", piplus_all.size() - 1., 1., 10., -0.5, 9.5);
+  int N_gamma = 0;
+  for(unsigned int i = 0; i < particles_all.size(); i++){
+    if(particles_all.at(i).PID() == 22) N_gamma ++;
+  }
+  FillHist("N_gamma", N_gamma, 1., 10., 0., 10.);
+  
+  // == Protons and neutrons
+  for(unsigned int i = 0; i < protons_all.size(); i++){
+    FillHist("E_proton", protons_all.at(i).E() * 1000., 1., 2000., 0., 2000.);
+    FillHist("KE_proton", protons_all.at(i).E() * 1000. - protons_all.at(i).M() * 1000. ,1., 100., 0., 100.);
+  }
+  for(unsigned int i = 0; i < particles_all.size(); i++){
+    if(particles_all.at(i).PID() == 2112){
+      double KE_neutron = particles_all.at(i).E() * 1000. - particles_all.at(i).M() * 1000.;
+      FillHist("E_neutron", particles_all.at(i).E() * 1000.,1., 2000., 0., 2000.);
+      FillHist("KE_neutron", KE_neutron , 1., 100., 0., 100.);
+      //cout << "Neutron KE : " << particles_all.at(i).E() * 1000. - particles_all.at(i).M() * 1000. << endl;
+    }
+  }
+
+  // == Pion energy loss
+  if(piplus_all.size() < 2) return;
+  Gen beam = particles_all.at(0);
+  //FillHist("P_beam", beam.P() * 1000., 1., 2000., 0., 2000.);
+  
+  for(unsigned int i = 1; i < piplus_all.size(); i++){
+    double E_loss = (beam.E() - piplus_all.at(i).E()) * 1000.;
+    double cos_theta = cos(piplus_all.at(i).Theta());
+    //cos_theta = acos(piplus_all.at(i).Pz() / piplus_all.at(i).P());
+    double EQE = Get_EQE(piplus_all.at(i).P() * 1000., cos_theta);
+    double EQE_massive_plus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 40., 1.);
+    double EQE_massive_minus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 40., -1.);
+    //cout << "[PionAnalyzer::QE_Study] EQE_massive_plus : " << EQE_massive_plus << ", EQE_massive_minus : " << EQE_massive_minus << endl;
+    if(i == 1){
+      FillHist("E_loss_pion", E_loss, 1., 1000., 0., 1000.);
+      FillHist("EQE_pion", EQE, 1., 1500., 0., 1500.);
+      FillHist("EQE_massive_plus_pion", EQE_massive_plus, 1., 10000., -5000., 5000.);
+      FillHist("EQE_massive_minus_pion", EQE_massive_minus, 1., 1500., 0., 1500.);
+      FillHist("EQE_massive_2D_pion", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+      FillHist("Outgoing_pion_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
+      FillHist("Eloss_vs_angle", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
+      FillHist("EQE_vs_angle", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
+      if(piplus_all.size() == 2){
+	FillHist("E_loss_pion_OnlyOne", E_loss, 1., 1000., 0., 1000.);
+	FillHist("EQE_pion_OnlyOne", EQE, 1., 1500., 0., 1500.);
+	FillHist("EQE_massive_plus_pion_OnlyOne", EQE_massive_plus, 1., 10000., -5000., 5000.);
+	FillHist("EQE_massive_minus_pion_OnlyeOne", EQE_massive_minus, 1., 1500., 0., 1500.);
+	FillHist("EQE_massive_2D_pion_OnlyOne", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+	FillHist("Outgoing_pion_OnlyOne_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
+	FillHist("Eloss_vs_angle_OnlyOne", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
+	FillHist("EQE_vs_angle_OnlyOne", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
+      }
+    }
+    FillHist("E_loss_pion_all", E_loss, 1., 1000., 0., 1000.);
+    FillHist("EQE_pion_all", EQE, 1., 1500., 0., 1500.);
+    FillHist("EQE_massive_plus_pion_all", EQE_massive_plus, 1., 10000., -5000., 5000.);
+    FillHist("EQE_massive_minus_pion_all", EQE_massive_minus, 1., 1500., 0., 1500.);
+    FillHist("EQE_massive_2D_pion_all", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+    FillHist("Outgoing_pion_all_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
+    FillHist("Eloss_vs_angle_all", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
+    FillHist("EQE_vs_angle_all", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
+    for(int j = 0; j < 50; j++){
+      double this_E_binding = 0. + (j + 0.) * 1.; // == [MeV]
+      double this_EQE_plus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, this_E_binding, 1.);
+      double this_EQE_minus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, this_E_binding, -1.);
+      double delta_EQE_plus = beam.E() * 1000. - this_EQE_plus;
+      double delta_EQE_minus = beam.E() * 1000. - this_EQE_minus;
+      TString E_binding_str = Form("%.0f", this_E_binding);
+      FillHist("EQE_minus_Eb_" + E_binding_str, this_EQE_minus, 1., 1500., 0., 1500.);
+      FillHist("delta_EQE_minus_Eb_" + E_binding_str, delta_EQE_minus, 1., 3000., -1500., 1500.);
+    }
   }
 }
 
@@ -397,6 +478,48 @@ void PionAnalyzer::SR2_FillHist(TString region, TString variable_str, double var
   if(atomic_number == 16 && atomic_mass == 38){
     JSFillHist(region, variable_str + "_Signal_" + region, variable, weight, N_bin, x_min, x_max);
   }
+}
+
+double PionAnalyzer::Get_EQE(double P_pion, double cos_theta){
+  double m_proton = 938.272;
+  double m_neutron = 939.565;
+  double m_pion = 139.57;
+  double E_binding = 40.;
+
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(m_pion, 2.0) );
+
+  double numer = pow(m_proton, 2.0)  - pow(m_neutron - E_binding, 2.0) - pow(m_pion, 2.0) + 2.0 * (m_neutron - E_binding) * E_pion;
+  double denom = 2.0 * ( m_neutron - E_binding - E_pion + P_pion * cos_theta );
+
+  double EQE = numer / denom;
+
+  return EQE;
+}
+
+double PionAnalyzer::Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_binding, int which_sol){
+  double m_proton = 938.272;
+  double m_neutron = 939.565;
+  double m_pion = 139.57;
+  //double E_binding = 40.;
+
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(m_pion, 2.0) );
+
+  double A = m_proton - E_binding - E_pion;
+  double B = pow(m_pion, 2.) - pow(P_pion, 2.) - pow(m_proton, 2.);
+
+  // == ax^2 + bx + c = 0
+  double a = 4. * (A*A - P_pion * P_pion * cos_theta * cos_theta);
+  double b = 4. * A * (A*A + B);
+  double c = pow(A*A + B, 2.) + 4. * m_pion * m_pion * P_pion * P_pion * cos_theta * cos_theta;
+
+  
+  double numer1 = (-1.) * b;
+  double numer_sqrt = sqrt(b*b - 4. * a * c);
+  double denom = 2. * a;
+
+  double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
+
+  return EQE;
 }
 
 PionAnalyzer::PionAnalyzer(){

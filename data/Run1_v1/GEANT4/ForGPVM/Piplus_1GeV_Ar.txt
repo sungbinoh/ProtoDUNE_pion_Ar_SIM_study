@@ -1,0 +1,10 @@
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_0.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_1.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_2.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_3.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_4.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_5.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_6.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_7.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_8.root
+/dune/data/users/tjyang/G4HadStudies/XS_Pi+_G4_lAr_1GeV_10b_9.root
