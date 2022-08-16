@@ -24,7 +24,9 @@ public:
 
   double Get_EQE(double P_pion, double cos_theta);
   double Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_binding, int which_sol); 
- //void Init();
+  double Get_EQE_NC_Delta_Pion(double P_pion, double cos_theta, double E_binding, int which_sol); 
+  double Get_EQE_NC_Pion_mX(double P_pion, double cos_theta, double E_binding, double P_beam);
+//void Init();
 
   PionAnalyzer();
   ~PionAnalyzer();

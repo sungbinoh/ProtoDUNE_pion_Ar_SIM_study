@@ -109,8 +109,13 @@ void PionAnalyzer::QE_Study(std::vector<Gen> particles_all, std::vector<Gen> pip
     double cos_theta = cos(piplus_all.at(i).Theta());
     //cos_theta = acos(piplus_all.at(i).Pz() / piplus_all.at(i).P());
     double EQE = Get_EQE(piplus_all.at(i).P() * 1000., cos_theta);
-    double EQE_massive_plus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 40., 1.);
-    double EQE_massive_minus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 40., -1.);
+    double EQE_massive_plus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 4., 1.);
+    double EQE_massive_minus = Get_EQE_NC_Pion(piplus_all.at(i).P() * 1000., cos_theta, 4., -1.);
+    double EQE_delta_plus = Get_EQE_NC_Delta_Pion(piplus_all.at(i).P() * 1000., cos_theta, 4., 1.);
+    double EQE_delta_minus = Get_EQE_NC_Delta_Pion(piplus_all.at(i).P() * 1000., cos_theta, 4., -1.);
+
+    double mX_QE = Get_EQE_NC_Pion_mX(piplus_all.at(i).P() * 1000., cos_theta, 4., beam.P() * 1000.);
+
     //cout << "[PionAnalyzer::QE_Study] EQE_massive_plus : " << EQE_massive_plus << ", EQE_massive_minus : " << EQE_massive_minus << endl;
     if(i == 1){
       FillHist("E_loss_pion", E_loss, 1., 1000., 0., 1000.);
@@ -118,15 +123,22 @@ void PionAnalyzer::QE_Study(std::vector<Gen> particles_all, std::vector<Gen> pip
       FillHist("EQE_massive_plus_pion", EQE_massive_plus, 1., 10000., -5000., 5000.);
       FillHist("EQE_massive_minus_pion", EQE_massive_minus, 1., 1500., 0., 1500.);
       FillHist("EQE_massive_2D_pion", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+      FillHist("EQE_delta_plus", EQE_delta_plus, 1., 10000., -5000., 5000.);
+      FillHist("EQE_delta_minus", EQE_delta_minus, 1., 1500., 0., 1500.);
+      FillHist("mX_QE", mX_QE, 1., 2000., 0., 2000.);
       FillHist("Outgoing_pion_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
       FillHist("Eloss_vs_angle", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
       FillHist("EQE_vs_angle", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
+      
       if(piplus_all.size() == 2){
 	FillHist("E_loss_pion_OnlyOne", E_loss, 1., 1000., 0., 1000.);
 	FillHist("EQE_pion_OnlyOne", EQE, 1., 1500., 0., 1500.);
 	FillHist("EQE_massive_plus_pion_OnlyOne", EQE_massive_plus, 1., 10000., -5000., 5000.);
 	FillHist("EQE_massive_minus_pion_OnlyeOne", EQE_massive_minus, 1., 1500., 0., 1500.);
 	FillHist("EQE_massive_2D_pion_OnlyOne", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+	FillHist("EQE_delta_plus_OnlyOne", EQE_delta_plus, 1., 10000., -5000., 5000.);
+	FillHist("EQE_delta_minus_OnlyOne", EQE_delta_minus, 1., 1500., 0., 1500.);
+	FillHist("mX_QE_OnlyOne",mX_QE, 1., 2000., 0., 2000.);
 	FillHist("Outgoing_pion_OnlyOne_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
 	FillHist("Eloss_vs_angle_OnlyOne", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
 	FillHist("EQE_vs_angle_OnlyOne", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
@@ -137,6 +149,9 @@ void PionAnalyzer::QE_Study(std::vector<Gen> particles_all, std::vector<Gen> pip
     FillHist("EQE_massive_plus_pion_all", EQE_massive_plus, 1., 10000., -5000., 5000.);
     FillHist("EQE_massive_minus_pion_all", EQE_massive_minus, 1., 1500., 0., 1500.);
     FillHist("EQE_massive_2D_pion_all", EQE_massive_plus, EQE_massive_minus, 1., 1000, -5000., 5000., 1000, -5000., 5000.);
+    FillHist("EQE_delta_plus_all", EQE_delta_plus, 1., 10000., -5000., 5000.);
+    FillHist("EQE_delta_minus_all", EQE_delta_minus, 1., 1500., 0., 1500.);
+    FillHist("mX_QE_all",mX_QE, 1., 2000., 0., 2000.);
     FillHist("Outgoing_pion_all_P_vs_angle", piplus_all.at(i).P() * 1000., piplus_all.at(i).Theta(), 1., 1050., 0., 1050., 1000., 0., 4.);
     FillHist("Eloss_vs_angle_all", E_loss, piplus_all.at(i).Theta(), 1., 1000., 0., 1000., 1000., 0., 4.);
     FillHist("EQE_vs_angle_all", EQE, piplus_all.at(i).Theta(), 1., 1500., 0., 1500., 1000., 0., 4.);
@@ -498,9 +513,7 @@ double PionAnalyzer::Get_EQE(double P_pion, double cos_theta){
 
 double PionAnalyzer::Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_binding, int which_sol){
   double m_proton = 938.272;
-  double m_neutron = 939.565;
   double m_pion = 139.57;
-  //double E_binding = 40.;
 
   double E_pion = sqrt( pow(P_pion, 2.0) + pow(m_pion, 2.0) );
 
@@ -520,6 +533,44 @@ double PionAnalyzer::Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_b
   double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
 
   return EQE;
+}
+
+double PionAnalyzer::Get_EQE_NC_Delta_Pion(double P_pion, double cos_theta, double E_binding, int which_sol){
+  double m_proton = 938.272;
+  double m_delta = 1232.;
+  double m_pion = 139.57;
+
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(m_pion, 2.0) );
+
+  double A = m_proton - E_binding - E_pion;
+  double B = pow(m_pion, 2.) - pow(P_pion, 2.) - pow(m_delta, 2.);
+
+  // == ax^2 + bx + c = 0
+  double a = 4. * (A*A - P_pion * P_pion * cos_theta * cos_theta);
+  double b = 4. * A * (A*A + B);
+  double c = pow(A*A + B, 2.) + 4. * m_pion * m_pion * P_pion * P_pion * cos_theta * cos_theta;
+
+  double numer1 = (-1.) * b;
+  double numer_sqrt = sqrt(b*b - 4. * a * c);
+  double denom = 2. * a;
+
+  double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
+
+  return EQE;
+}
+
+double PionAnalyzer::Get_EQE_NC_Pion_mX(double P_pion, double cos_theta, double E_binding, double P_beam){
+  double m_proton = 938.272;
+  double m_pion = 139.57;
+
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(m_pion, 2.0) );
+  double E_beam = sqrt( pow(P_beam, 2.0) + pow(m_pion, 2.0) );
+
+  double A = m_proton - E_binding - E_pion;
+
+  double mX = sqrt(m_pion * m_pion + A * A + 2.0 * A * E_beam + 2.0 * P_beam * P_pion * cos_theta - P_pion * P_pion);
+
+  return mX;
 }
 
 PionAnalyzer::PionAnalyzer(){
