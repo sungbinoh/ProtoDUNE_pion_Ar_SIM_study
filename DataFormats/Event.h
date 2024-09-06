@@ -17,7 +17,7 @@ public:
 private:
   TString j_Simulator;
 
-  ClassDef(Event,1)
+  //ClassDef(Event,1)
 };
 
 #endif

@@ -30,7 +30,7 @@ private:
   int j_PID, j_interType;
   double j_massPart, j_X, j_Y, j_Z;
 
-  ClassDef(Gen,1)
+  //ClassDef(Gen,1)
 };
 
 #endif

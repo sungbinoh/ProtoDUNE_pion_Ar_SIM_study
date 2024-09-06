@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-ClassImp(Particle)
+//ClassImp(Particle)
 
 Particle::Particle() :
   TLorentzVector(),

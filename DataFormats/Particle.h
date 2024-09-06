@@ -36,7 +36,7 @@ public:
 private:
   int j_Charge;
 
-  ClassDef(Particle,1)
+  //ClassDef(Particle,1)
 
 };
 

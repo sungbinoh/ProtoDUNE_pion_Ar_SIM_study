@@ -11,11 +11,11 @@
 
 #include "GEANT4Ntuple.h"
 #include "FLUKANtuple.h"
-#include "Event.h"
-#include "Particle.h"
-#include "Gen.h"
+#include "../DataFormats/Event.h"
+#include "../DataFormats/Particle.h"
+#include "../DataFormats/Gen.h"
 
-#include "SmearParticles.h"
+#include "../AnalyzerTools/SmearParticles.h"
 
 #define M_Z 91.1876
 #define M_W 80.379
@@ -33,7 +33,7 @@ class AnalyzerCore {
 public:
 
   AnalyzerCore();
-  ~AnalyzerCore();
+  virtual ~AnalyzerCore();
 
   GEANT4Ntuple this_GEANT4Ntuple;
   FLUKANtuple this_FLUKANtuple;

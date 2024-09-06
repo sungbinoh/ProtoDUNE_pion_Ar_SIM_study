@@ -8,7 +8,7 @@
 
 #include "TRandom3.h"
 
-#include "Gen.h"
+#include "../DataFormats/Gen.h"
 
 class SmearParticles{
 

@@ -1,6 +1,6 @@
 #include "Event.h"
 
-ClassImp(Event)
+//ClassImp(Event)
 
 Event::Event(){
   j_Simulator = "";

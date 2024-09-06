@@ -1,6 +1,6 @@
 #include "Gen.h"
 
-ClassImp(Gen)
+//ClassImp(Gen)
 
 Gen::Gen() : Particle() {
   j_IsEmpty = true;

@@ -1,4 +1,8 @@
 root -l -b<<EOF
+#include "./Analyzers/PionAnalyzer.h"
+gSystem->Load("./lib/libDataFormats.so");
+gSystem->Load("./lib/libAnalyzerTools.so");
+gSystem->Load("./lib/libAnalyzers.so");
 SmearParticles a
 a.TestClass()
 //cout << "aaaaa" << endl
