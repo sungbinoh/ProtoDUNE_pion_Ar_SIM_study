@@ -4,6 +4,7 @@ set(SOURCES
   GEANT4Ntuple.C
   AnalyzerCore.C
   PionAnalyzer.C
+  BrainStorm.C
 )
 
 set(HDRFILES
@@ -11,6 +12,7 @@ set(HDRFILES
   GEANT4Ntuple.h
   AnalyzerCore.h
   PionAnalyzer.h
+  BrainStorm.h
 )
 
 # Create the shared library

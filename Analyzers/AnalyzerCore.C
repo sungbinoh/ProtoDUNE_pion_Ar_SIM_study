@@ -315,6 +315,120 @@ int AnalyzerCore::GetAtomicMass(int pid){
 
 }
 
+int AnalyzerCore::GetNPID(const std::vector<Gen>& particles, int PID){
+
+  int out = 0;
+  for(unsigned int i=0; i<particles.size(); i++){
+    if(particles.at(i).PID() == PID) out++;
+  }
+
+  return out;
+}
+
+//==================
+// Functions for EQE
+//================== 
+double AnalyzerCore::Get_EQE_pion_massless(double P_pion, double cos_theta){
+  // == Neutrino EQE formula with pi+ + proton final state using pion info
+  double E_binding = 4.;
+
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(M_pion, 2.0) );
+
+  double numer = pow(M_proton, 2.0)  - pow(M_neutron - E_binding, 2.0) - pow(M_pion, 2.0) + 2.0 * (M_neutron - E_binding) * E_pion;
+  double denom = 2.0 * ( M_neutron - E_binding - E_pion + P_pion * cos_theta );
+
+  double EQE = numer / denom;
+
+  return EQE;
+}
+
+double AnalyzerCore::Get_EQE_proton_massless(double P_proton, double cos_theta){
+  // == Neutrino EQE formula with pi+ + proton final state using proton info
+  double E_binding = 4.;
+
+  double E_proton = sqrt( pow(P_proton, 2.0) + pow(M_proton, 2.0) );
+  double numer = M_pion * M_pion - pow(M_proton - E_binding - E_proton, 2.) + P_proton * P_proton;
+  double denom = 2.0 * ( M_neutron - E_binding - E_proton + P_proton * cos_theta );
+
+  double EQE = numer / denom;
+
+  return EQE;
+}
+
+double AnalyzerCore::Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_binding, int which_sol){
+  // == Massive EQE formula assuming neutral current interaction and pion info
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(M_pion, 2.0) );
+
+  double A = M_proton - E_binding - E_pion;
+  double B = pow(M_pion, 2.) - pow(P_pion, 2.) - pow(M_proton, 2.);
+
+  // == ax^2 + bx + c = 0 
+  double a = 4. * (A*A - P_pion * P_pion * cos_theta * cos_theta);
+  double b = 4. * A * (A*A + B);
+  double c = pow(A*A + B, 2.) + 4. * M_pion * M_pion * P_pion * P_pion * cos_theta * cos_theta;
+
+  double numer1 = (-1.) * b;
+  double numer_sqrt = sqrt(b*b - 4. * a * c);
+  double denom = 2. * a;
+
+  double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
+
+  return EQE;
+}
+
+double AnalyzerCore::Get_EQE_NC_Proton(double P_proton, double cos_theta, double E_binding, int which_sol){
+  // == Massive EQE formula assuming neutral current interaction and proton info
+  double E_proton = sqrt( pow(P_proton, 2.0) + pow(M_proton, 2.0) );
+
+  double A = M_proton - E_binding - E_proton;
+
+  // == ax^2 + bx + c = 0
+  double a = 4. * (A*A - P_proton * P_proton * cos_theta * cos_theta);
+  double b = 4. * A * (A*A - P_proton * P_proton);
+  double c = pow(A*A - P_proton * P_proton, 2.) + 4. * M_pion * M_pion * P_proton * P_proton * cos_theta * cos_theta;
+
+  double numer1 = (-1.) * b;
+  double numer_sqrt = sqrt(b*b - 4. * a * c);
+  double denom = 2. * a;
+
+  double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
+
+  return EQE;
+}
+
+double AnalyzerCore::Get_EQE_NC_Delta_Pion(double P_pion, double cos_theta, double E_binding, int which_sol){
+  // == EQE assuming final state is pion + Delta
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(M_pion, 2.0) );
+
+  double A = M_proton - E_binding - E_pion;
+  double B = pow(M_pion, 2.) - pow(P_pion, 2.) - pow(M_delta, 2.);
+
+  // == ax^2 + bx + c = 0
+  double a = 4. * (A*A - P_pion * P_pion * cos_theta * cos_theta);
+  double b = 4. * A * (A*A + B);
+  double c = pow(A*A + B, 2.) + 4. * M_pion * M_pion * P_pion * P_pion * cos_theta * cos_theta;
+
+  double numer1 = (-1.) * b;
+  double numer_sqrt = sqrt(b*b - 4. * a * c);
+  double denom = 2. * a;
+
+  double EQE = (numer1 + (which_sol + 0.) * numer_sqrt ) / denom;
+
+  return EQE;
+}
+
+double AnalyzerCore::Get_EQE_NC_Pion_mX(double P_pion, double cos_theta, double E_binding, double P_beam){
+  // == Mass of outgoing particle together with pi
+  double E_pion = sqrt( pow(P_pion, 2.0) + pow(M_pion, 2.0) );
+  double E_beam = sqrt( pow(P_beam, 2.0) + pow(M_pion, 2.0) );
+
+  double A = M_proton - E_binding - E_pion;
+
+  double mX = sqrt(M_pion * M_pion + A * A + 2.0 * A * E_beam + 2.0 * P_beam * P_pion * cos_theta - P_pion * P_pion);
+
+  return mX;
+}
+
 //==================
 //==== Plotting
 //==================

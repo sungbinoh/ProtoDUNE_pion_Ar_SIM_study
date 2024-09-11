@@ -17,15 +17,16 @@
 
 #include "../AnalyzerTools/SmearParticles.h"
 
-#define M_Z 91.1876
-#define M_W 80.379
-#define M_mu 105.65837/1e3
-#define M_neutron 939.565/1e3
-#define M_proton 938.272/1e3
-#define M_pion 139.570/1e3
-#define M_Kaon 493.677/1e3
-#define M_e 0.510998/1e3
-#define M_pizero 134.976/1e3
+#define M_Z 91.1876e3
+#define M_W 80.379e3
+#define M_mu 105.65837
+#define M_neutron 939.565
+#define M_proton 938.272
+#define M_delta 1232.0
+#define M_pion 139.570
+#define M_Kaon 493.677
+#define M_e 0.510998
+#define M_pizero 134.976
 
 //class AnalyzerCore: public GEANT4Ntuple, public FLUKANtuple {
 class AnalyzerCore {
@@ -127,8 +128,18 @@ public:
   //==================
   int GetAtomicNumber(int pid);
   int GetAtomicMass(int pid);
-
-
+  int GetNPID(const std::vector<Gen>& particles, int PID);
+  
+  //==================
+  // == EQE functions
+  //==================
+  double Get_EQE_pion_massless(double P_pion, double cos_theta);
+  double Get_EQE_proton_massless(double P_proton, double cos_theta);
+  double Get_EQE_NC_Pion(double P_pion, double cos_theta, double E_binding, int which_sol);
+  double Get_EQE_NC_Proton(double P_proton, double cos_theta, double E_binding, int which_sol);
+  double Get_EQE_NC_Delta_Pion(double P_pion, double cos_theta, double E_binding, int which_sol);
+  double Get_EQE_NC_Pion_mX(double P_pion, double cos_theta, double E_binding, double P_beam);
+  
   //===Plotting
   std::map< TString, TH1D* > maphist_TH1D;
   std::map< TString, TH2D* > maphist_TH2D;
